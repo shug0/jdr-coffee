@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-12-06",
+  "totalEntries": 0,
+  "entries": [],
+  "statistics": {
+    "byPeriod": {
+      "prehistory": 0,
+      "ancient": 0,
+      "medieval": 0,
+      "renaissance": 0,
+      "early-modern": 0,
+      "modern": 0,
+      "contemporary": 0
+    },
+    "byRegion": {
+      "europe": 0,
+      "asia": 0,
+      "africa": 0,
+      "americas": 0,
+      "oceania": 0
+    },
+    "byTheme": {
+      "economy": 0,
+      "warfare": 0,
+      "technology": 0,
+      "culture": 0,
+      "society": 0,
+      "architecture": 0,
+      "religion": 0,
+      "politics": 0,
+      "science": 0,
+      "daily-life": 0
+    },
+    "byReliability": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}

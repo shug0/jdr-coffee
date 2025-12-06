@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-12-06",
+  "periods": {
+    "prehistory": {
+      "name": "Préhistoire",
+      "timeRange": "~3M BCE - 3000 BCE",
+      "entries": []
+    },
+    "ancient": {
+      "name": "Antiquité",
+      "timeRange": "~3000 BCE - 500 CE",
+      "entries": []
+    },
+    "medieval": {
+      "name": "Moyen Âge",
+      "timeRange": "~500 CE - 1500 CE",
+      "entries": []
+    },
+    "renaissance": {
+      "name": "Renaissance",
+      "timeRange": "~1400 CE - 1600 CE",
+      "entries": []
+    },
+    "early-modern": {
+      "name": "Début moderne",
+      "timeRange": "~1600 CE - 1800 CE",
+      "entries": []
+    },
+    "modern": {
+      "name": "Moderne",
+      "timeRange": "~1800 CE - 1900 CE",
+      "entries": []
+    },
+    "contemporary": {
+      "name": "Contemporain",
+      "timeRange": "~1900 CE - present",
+      "entries": []
+    }
+  }
+}

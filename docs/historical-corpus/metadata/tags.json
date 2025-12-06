@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-12-06",
+  "tags": {
+    "periods": [
+      "prehistory",
+      "ancient",
+      "medieval",
+      "renaissance",
+      "early-modern",
+      "modern",
+      "contemporary"
+    ],
+    "regions": [
+      "europe",
+      "western-europe",
+      "eastern-europe",
+      "asia",
+      "east-asia",
+      "south-asia",
+      "middle-east",
+      "africa",
+      "north-africa",
+      "sub-saharan-africa",
+      "americas",
+      "north-america",
+      "south-america",
+      "oceania"
+    ],
+    "themes": [
+      "economy",
+      "warfare",
+      "technology",
+      "culture",
+      "society",
+      "architecture",
+      "religion",
+      "politics",
+      "science",
+      "daily-life",
+      "trade",
+      "agriculture",
+      "crafts",
+      "literature",
+      "art",
+      "music",
+      "medicine",
+      "law",
+      "education"
+    ]
+  },
+  "usage": {}
+}
