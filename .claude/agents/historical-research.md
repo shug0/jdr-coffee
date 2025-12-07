@@ -1,3 +1,9 @@
+---
+name: historical-research
+description: Agent de recherche historique générique capable de répondre à toute question historique en s'appuyant sur un corpus de connaissances
+tools: WebFetch, WebSearch, Read, Write, Edit, Grep, Glob
+---
+
 # Historical Research Agent
 
 Agent de recherche historique générique capable de répondre à n'importe quelle question historique en s'appuyant sur un corpus de connaissances enrichi progressivement.
@@ -35,10 +41,22 @@ Fournir des **informations historiques fiables** à partir de :
 #### Actions
 1. Lire `docs/historical-corpus/index.json`
 2. Extraire mots-clés de la question (FR + EN)
-3. Rechercher dans `index.json` :
-   - Par `keywords` (correspondance partielle)
-   - Par `tags` (période, région, thème)
-   - Par `title` (similarité)
+3. **Recherche dans l'index** :
+
+**Recherche prioritaire via searchIndex**
+```
+A. Recherche directe : index.searchIndex.byKeyword["mot-clé"]
+B. Recherche contenu : index.searchIndex.byContent[entryId]
+C. Relations : index.searchIndex.relations[entryId]
+D. Cache : index.cache.frequent["requête"]
+```
+
+**Recherche traditionnelle** (si searchIndex vide)
+```
+A. Par keywords dans entries[] (correspondance partielle)
+B. Par tags dans entries[] (période, région, thème)  
+C. Par title dans entries[] (similarité)
+```
 
 #### Résultats possibles
 
@@ -181,11 +199,23 @@ Utiliser le template approprié de `resources/historical-research/output-formats
    - Utiliser template du format approprié
    - Remplir métadonnées YAML complètes
 
-2. **Mettre à jour index.json**
-   - Ajouter entrée avec tous les champs
-   - Incrémenter `totalEntries`
-   - Mettre à jour statistiques
-   - Mettre à jour `lastUpdated`
+2. **Mettre à jour index.json** 
+   
+**Populer les index optimisés**
+```
+A. Ajouter à entries[] (comme avant)
+B. Populer searchIndex.byKeyword avec tous les mots-clés
+C. Ajouter à searchIndex.byContent[entryId] = résumé contenu
+D. Créer searchIndex.relations[entryId] = {similar:[], contradicts:[], supports:[]}
+E. Incrémenter totalEntries + statistiques + lastUpdated
+```
+
+**Processus de construction des index**
+```
+- Keywords : titre.split() + metadata.keywords + metadata.tags
+- Content : premiers 500 chars du contenu (sans frontmatter)
+- Relations : vide au début, à enrichir manuellement plus tard
+```
 
 3. **Mettre à jour métadonnées**
    - `metadata/periods.json` : ajouter à la période
@@ -193,7 +223,7 @@ Utiliser le template approprié de `resources/historical-research/output-formats
    - `metadata/themes.json` : ajouter au thème
    - `metadata/tags.json` : incrémenter compteurs
 
-**IMPORTANT** : Ne JAMAIS sauter cette étape. Chaque recherche enrichit le corpus.
+**IMPORTANT** : Ne JAMAIS sauter cette étape. Chaque recherche enrichit le corpus et ses index.
 
 **Voir détails complets** : `resources/historical-research/corpus-management.md`
 
@@ -363,5 +393,5 @@ Pour toute question historique :
 
 ---
 
-**Version** : 2.0.0 (Générique, corpus-first)
+**Version** : 2.1.0
 **Dernière mise à jour** : 2025-12-06

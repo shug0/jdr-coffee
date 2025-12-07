@@ -71,9 +71,15 @@ L'agent détecte automatiquement le type de question et adapte le format de sort
 
 **Fiabilité de cette information** : [Haute/Moyenne/Basse]
 **Ajouté au corpus** : `entry-XXX-[description]`
+
+## Bibliographie complète
+[Sources en format académique standard]
+
+## Notes méthodologiques  
+[Méthodes utilisées, limitations, recommandations]
 ```
 
-### Exemple concret
+### Exemple concret (format réponse agent)
 
 ```markdown
 # Validation : Pommes de terre - Moyen Âge européen
