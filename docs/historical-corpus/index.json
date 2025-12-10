@@ -1,52 +1,79 @@
 {
   "version": "2.0.0",
-  "lastUpdated": "2025-12-06",
+  "lastUpdated": "2025-12-09",
   "totalEntries": 0,
+
   "entries": [],
+
+  "taxonomy": {
+    "periods": {
+      "prehistory": {
+        "label": "Préhistoire",
+        "range": [-3000000, -3300],
+        "desc": "Avant l'écriture"
+      },
+      "ancient": {
+        "label": "Antiquité",
+        "range": [-3300, 476],
+        "desc": "Premières civilisations → Chute de Rome"
+      },
+      "medieval": {
+        "label": "Moyen Âge",
+        "range": [476, 1492],
+        "desc": "Chute de Rome → Découverte des Amériques"
+      },
+      "renaissance": {
+        "label": "Renaissance",
+        "range": [1300, 1600],
+        "desc": "Renouveau culturel européen"
+      },
+      "early-modern": {
+        "label": "Époque moderne",
+        "range": [1492, 1789],
+        "desc": "Grandes découvertes → Révolution française"
+      },
+      "modern": {
+        "label": "Époque contemporaine",
+        "range": [1789, 1945],
+        "desc": "Révolution française → Fin WW2"
+      },
+      "contemporary": {
+        "label": "Histoire récente",
+        "range": [1945, 2025],
+        "desc": "Depuis fin WW2"
+      }
+    },
+    "regions": {
+      "europe": "Europe",
+      "asia": "Asie",
+      "africa": "Afrique",
+      "americas": "Amériques",
+      "oceania": "Océanie",
+      "global": "Global"
+    },
+    "themes": {
+      "economy": "Économie",
+      "warfare": "Guerre",
+      "technology": "Technologie",
+      "culture": "Culture",
+      "society": "Société",
+      "architecture": "Architecture",
+      "religion": "Religion",
+      "politics": "Politique",
+      "science": "Science",
+      "daily-life": "Vie quotidienne"
+    }
+  },
+
   "searchIndex": {
     "byKeyword": {},
     "byContent": {},
-    "byTopic": {},
     "relations": {}
   },
+
   "cache": {
     "frequent": {},
     "lastQuery": null,
     "queryHistory": []
-  },
-  "statistics": {
-    "byPeriod": {
-      "prehistory": 0,
-      "ancient": 0,
-      "medieval": 0,
-      "renaissance": 0,
-      "early-modern": 0,
-      "modern": 0,
-      "contemporary": 0
-    },
-    "byRegion": {
-      "europe": 0,
-      "asia": 0,
-      "africa": 0,
-      "americas": 0,
-      "oceania": 0
-    },
-    "byTheme": {
-      "economy": 0,
-      "warfare": 0,
-      "technology": 0,
-      "culture": 0,
-      "society": 0,
-      "architecture": 0,
-      "religion": 0,
-      "politics": 0,
-      "science": 0,
-      "daily-life": 0
-    },
-    "byReliability": {
-      "high": 0,
-      "medium": 0,
-      "low": 0
-    }
   }
 }

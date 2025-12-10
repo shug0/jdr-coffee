@@ -1,5 +1,3 @@
-Claude Code is a Beast – Tips from 6 Months of Hardcore Use
-
 Edit: Many of you are asking for a repo so I will make an effort to get one up in the next couple days. All of this is a part of a work project at the moment, so I have to take some time to copy everything into a fresh project and scrub any identifying info. I will post the link here when it's up. You can also follow me and I will post it on my profile so you get notified. Thank you all for the kind comments. I'm happy to share this info with others since I don't get much chance to do so in my day-to-day.
 
 Edit (final?): I bit the bullet and spent the afternoon getting a github repo up for you guys. Just made a post with some additional info here or you can go straight to the source:

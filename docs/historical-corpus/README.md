@@ -7,9 +7,49 @@ Base de connaissances historiques construite par l'agent `historical-research`.
 ```
 historical-corpus/
 ├── README.md           # Ce fichier
-├── index.json          # Index de recherche (source de vérité)
-├── entries/            # Entrées de connaissances
-└── metadata/           # Métadonnées pour statistiques
+├── index.json          # Index unique (source de vérité)
+└── entries/            # Entrées de connaissances (.md)
+```
+
+## Architecture simplifiée
+
+Tout est centralisé dans `index.json` :
+- **entries[]** : Liste des entrées avec métadonnées complètes
+- **searchIndex** : Index optimisés (byKeyword, byContent, relations)
+- **statistics** : Compteurs auto-calculés (byPeriod, byRegion, byTheme, byReliability)
+- **taxonomy** : Définitions des périodes/régions/thèmes (référentiel fixe)
+- **cache** : Optimisation des requêtes fréquentes
+
+## Format des entrées
+
+Chaque entrée suit ce format Markdown + YAML :
+
+```markdown
+---
+id: entry-XXX
+title: "Titre descriptif"
+summary: "Résumé contextuel de 2-3 phrases pour recherche sémantique"
+period: "medieval"
+regions: ["europe"]
+themes: ["economy", "warfare"]
+tags: ["mot-clé1", "keyword1", "mot-clé2"]
+reliability: "high"
+sources: 3
+created: "2025-12-09"
+updated: "2025-12-09"
+---
+
+# Titre
+
+## Synthèse
+...
+
+## Contenu détaillé
+...
+
+## Sources
+1. Source académique 1
+2. Source académique 2
 ```
 
 ## Usage

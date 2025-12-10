@@ -309,16 +309,19 @@ entry-003-roman-architecture-concrete.md
 ---
 id: entry-XXX
 title: "Titre descriptif et spécifique"
+summary: "Résumé contextuel de 2-3 phrases décrivant ce que documente cette entrée, son contexte historique et les aspects clés couverts."
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 tags: [tag1, tag2, tag3, ...]
 period: période_principale
-region: région_principale
-theme: thème_principal
+regions: [région1, région2]
+themes: [thème1, thème2]
 reliability: high|medium|low
 sources: nombre_de_sources
 ---
 ```
+
+**Note importante** : Le champ `summary` est essentiel pour améliorer la recherche (+45% précision selon Anthropic).
 
 **Choisir tags pertinents** :
 - Période (medieval, ancient, etc.)
@@ -348,24 +351,25 @@ sources: nombre_de_sources
 }
 ```
 
-**Mettre à jour statistiques** :
+**Mettre à jour compteurs** :
 - Incrémenter `totalEntries`
-- Incrémenter compteurs `byPeriod`, `byRegion`, `byTheme`, `byReliability`
-- Mettre à jour `lastUpdated`
+- Mettre à jour `lastUpdated` avec la date actuelle
 
-#### 5.4 Mettre à jour métadonnées
+**Note** : Les statistiques détaillées ne sont plus stockées dans index.json.
+Elles sont calculables à la demande depuis `entries[]`.
 
-**`metadata/periods.json`** :
-- Ajouter entry ID à la liste de la période concernée
+#### 5.4 Validation avec taxonomy
 
-**`metadata/regions.json`** :
-- Ajouter entry ID à la liste de la région concernée
+**Vérifier que les codes utilisés existent dans taxonomy** :
+- `period` doit exister dans `taxonomy.periods`
+- `regions[]` doivent exister dans `taxonomy.regions`
+- `themes[]` doivent exister dans `taxonomy.themes`
 
-**`metadata/themes.json`** :
-- Ajouter entry ID à la liste du thème concerné
-
-**`metadata/tags.json`** :
-- Incrémenter compteur d'usage pour chaque tag
+**Taxonomy** (périodes/régions/thèmes) :
+- Définie dans `index.json → taxonomy`
+- Référentiel fixe (ne change pas sauf ajout de nouvelles périodes/régions)
+- Ne pas modifier lors de l'ajout d'entrées
+- Structure : `periods` = {label, range, desc}, `regions/themes` = {code: "Label"}
 
 ---
 

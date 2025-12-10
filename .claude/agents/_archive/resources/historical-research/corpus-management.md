@@ -172,12 +172,13 @@ entry-005-black-death-chronology-europe.md
 ---
 id: entry-XXX
 title: "Titre descriptif complet"
+summary: "Résumé contextuel de 2-3 phrases pour recherche sémantique"
 created: 2025-12-06
 updated: 2025-12-06
 tags: [medieval, europe, economy, sword, weapon, warfare]
 period: medieval
-region: europe
-theme: economy
+regions: [europe]
+themes: [economy, warfare]
 reliability: high
 sources: 3
 ---
@@ -226,95 +227,72 @@ tags: [
 {
   "id": "entry-XXX",
   "title": "Medieval Longsword Price (Europe, 1300-1400)",
+  "summary": "Cette entrée documente les prix des épées longues médiévales en Europe entre 1300-1400, couvrant les variations selon la qualité, le contexte économique et les comparaisons avec d'autres biens.",
   "file": "entries/entry-XXX-medieval-sword-price.md",
-  "tags": ["medieval", "europe", "economy", "sword", "weapon", "warfare"],
   "period": "medieval",
-  "region": "europe",
-  "theme": "economy",
+  "regions": ["europe"],
+  "themes": ["economy", "warfare"],
+  "tags": ["medieval", "europe", "economy", "sword", "weapon", "warfare"],
   "keywords": [
     "épée", "sword", "longsword", "épée longue",
     "prix", "price", "cost", "coût",
     "medieval", "médiéval", "moyen âge", "middle ages",
     "1300", "1400", "XIVe", "14th century"
   ],
-  "reliability": "high"
+  "reliability": "high",
+  "sources": 3,
+  "created": "2025-12-06",
+  "updated": "2025-12-06"
 }
 ```
 
-**Mettre à jour statistiques** :
+**Mettre à jour compteurs** :
 ```json
 {
-  "totalEntries": 43,  // Incrémenter
-  "lastUpdated": "2025-12-06",  // Mettre à jour
-  "statistics": {
-    "byPeriod": {
-      "medieval": 16  // Incrémenter compteur pertinent
-    },
-    "byRegion": {
-      "europe": 25  // Incrémenter
-    },
-    "byTheme": {
-      "economy": 13  // Incrémenter
-    },
-    "byReliability": {
-      "high": 35  // Incrémenter
-    }
-  }
+  "totalEntries": 43,  // Incrémenter de 1
+  "lastUpdated": "2025-12-09"  // Date actuelle
 }
 ```
 
-#### 6. Mettre à jour métadonnées
+**Note importante** :
+- Les statistiques détaillées (byPeriod, byRegion, etc.) ne sont plus stockées
+- Elles sont calculables à la demande depuis `entries[]`
+- La taxonomy est dans `index.json → taxonomy` (référentiel fixe de définitions)
 
-**periods.json** :
-```json
-{
-  "periods": {
-    "medieval": {
-      "name": "Moyen Âge",
-      "timeRange": "~500 CE - 1500 CE",
-      "entries": ["entry-001", "entry-005", ..., "entry-XXX"]
-    }
-  }
+#### 6. Validation avec taxonomy
+
+**Vérifier que les codes sont valides** :
+```javascript
+// Avant d'ajouter une entrée, valider :
+const taxonomy = index.taxonomy
+
+// Vérifier period
+if (!taxonomy.periods[entry.period]) {
+  error(`Période invalide: ${entry.period}`)
 }
+
+// Vérifier regions
+entry.regions.forEach(region => {
+  if (!taxonomy.regions[region]) {
+    error(`Région invalide: ${region}`)
+  }
+})
+
+// Vérifier themes
+entry.themes.forEach(theme => {
+  if (!taxonomy.themes[theme]) {
+    error(`Thème invalide: ${theme}`)
+  }
+})
 ```
 
-**regions.json** :
-```json
-{
-  "regions": {
-    "europe": {
-      "name": "Europe",
-      "entries": ["entry-001", "entry-003", ..., "entry-XXX"]
-    }
-  }
-}
-```
-
-**themes.json** :
-```json
-{
-  "themes": {
-    "economy": {
-      "name": "Économie",
-      "description": "Prix, commerce, monnaies, systèmes économiques",
-      "entries": ["entry-001", "entry-007", ..., "entry-XXX"]
-    }
-  }
-}
-```
-
-**tags.json** :
-```json
-{
-  "usage": {
-    "medieval": 16,    // Incrémenter
-    "europe": 25,      // Incrémenter
-    "economy": 13,     // Incrémenter
-    "sword": 3,        // Incrémenter ou créer
-    // etc.
-  }
-}
-```
+**Taxonomy** (référentiel fixe) :
+- Définitions dans `index.json → taxonomy`
+- Ne pas modifier lors de l'ajout d'entrées
+- Structure :
+  - `periods` : {label, range: [start, end], desc}
+  - `regions` : {code: "Label"}
+  - `themes` : {code: "Label"}
 
 ---
 
@@ -445,10 +423,11 @@ jq '.entries[] | select(.sources < 2) | .id' docs/historical-corpus/index.json
 jq '.entries[] | select(.reliability=="low") | .id' docs/historical-corpus/index.json
 ```
 
-**Statistiques des tags** :
+**Statistiques des tags les plus utilisés** :
 ```bash
-jq '.usage | to_entries | sort_by(.value) | reverse | .[0:10]' \
-  docs/historical-corpus/metadata/tags.json
+# Calculer dynamiquement les tags les plus fréquents
+jq '[.entries[].tags[]] | group_by(.) | map({tag: .[0], count: length}) | sort_by(.count) | reverse | .[0:10]' \
+  docs/historical-corpus/index.json
 ```
 
 ---

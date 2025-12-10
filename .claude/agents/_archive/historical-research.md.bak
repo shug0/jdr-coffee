@@ -1,6 +1,6 @@
 ---
 name: historical-research
-description: Agent de recherche historique générique capable de répondre à toute question historique en s'appuyant sur un corpus de connaissances
+description: Agent de recherche historique générique capable de répondre à toute question historique en s'appuyant sur un corpus de connaissances qu'il met a jours
 tools: WebFetch, WebSearch, Read, Write, Edit, Grep, Glob
 ---
 
@@ -203,25 +203,26 @@ Utiliser le template approprié de `resources/historical-research/output-formats
    
 **Populer les index optimisés**
 ```
-A. Ajouter à entries[] (comme avant)
+A. Ajouter à entries[] avec toutes les métadonnées incluant `summary`
 B. Populer searchIndex.byKeyword avec tous les mots-clés
-C. Ajouter à searchIndex.byContent[entryId] = résumé contenu
+C. Ajouter à searchIndex.byContent[entryId] = summary + extrait contenu
 D. Créer searchIndex.relations[entryId] = {similar:[], contradicts:[], supports:[]}
-E. Incrémenter totalEntries + statistiques + lastUpdated
+E. Incrémenter totalEntries + mettre à jour lastUpdated
 ```
 
 **Processus de construction des index**
 ```
+- Summary : Résumé contextuel 2-3 phrases (améliore recherche de +45%)
 - Keywords : titre.split() + metadata.keywords + metadata.tags
-- Content : premiers 500 chars du contenu (sans frontmatter)
+- Content : summary + premiers 500 chars du contenu (sans frontmatter)
 - Relations : vide au début, à enrichir manuellement plus tard
 ```
 
-3. **Mettre à jour métadonnées**
-   - `metadata/periods.json` : ajouter à la période
-   - `metadata/regions.json` : ajouter à la région
-   - `metadata/themes.json` : ajouter au thème
-   - `metadata/tags.json` : incrémenter compteurs
+3. **Mettre à jour les compteurs**
+   - Incrémenter `totalEntries`
+   - Mettre à jour `lastUpdated` avec la date actuelle
+
+   Note : La taxonomy (définitions des périodes/régions/thèmes) est fixe dans `index.json → taxonomy`.
 
 **IMPORTANT** : Ne JAMAIS sauter cette étape. Chaque recherche enrichit le corpus et ses index.
 
@@ -361,21 +362,25 @@ Le système est extensible pour :
 
 **Statistiques** : Voir `docs/historical-corpus/index.json`
 - Nombre d'entrées : `totalEntries`
-- Répartition par période, région, thème
-- Taux de fiabilité moyen
+- Dernière mise à jour : `lastUpdated`
+- Taxonomy complète dans `taxonomy` (périodes, régions, thèmes)
 
 **Structure** :
 ```
 docs/historical-corpus/
 ├── README.md              # Guide du corpus
-├── index.json             # Index de recherche rapide
-├── entries/               # Entrées (1 fichier = 1 sujet)
-└── metadata/              # Métadonnées pour recherche
-    ├── tags.json
-    ├── periods.json
-    ├── regions.json
-    └── themes.json
+├── index.json             # Index unique (source de vérité)
+└── entries/               # Entrées (1 fichier = 1 sujet)
 ```
+
+**Contenu de index.json** :
+- `entries[]` : Liste complète des entrées avec métadonnées
+- `taxonomy` : Définitions des périodes/régions/thèmes (référentiel fixe)
+  - `periods` : {label, range: [start, end], desc}
+  - `regions` : {code: "Label"}
+  - `themes` : {code: "Label"}
+- `searchIndex` : Index optimisés (byKeyword, byContent, relations)
+- `cache` : Optimisation requêtes fréquentes
 
 ---
 
