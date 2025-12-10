@@ -1,0 +1,46 @@
+{
+  "timestamp": 1765408706369,
+  "overall": "healthy",
+  "components": {
+    "corpus": {
+      "status": "healthy",
+      "issues": [],
+      "metrics": {
+        "entries": 0,
+        "lastUpdated": "2025-12-09",
+        "activeLocks": 1
+      }
+    },
+    "agents": {
+      "status": "healthy",
+      "issues": [],
+      "metrics": {
+        "totalAgents": 18,
+        "domainCounts": {
+          "frontend": 4,
+          "product": 5,
+          "research": 5,
+          "shared": 4
+        }
+      }
+    },
+    "coordination": {
+      "status": "healthy",
+      "issues": [],
+      "metrics": {
+        "activeWork": 0,
+        "completedWork": 0
+      }
+    },
+    "sessions": {
+      "status": "healthy",
+      "issues": [],
+      "metrics": {
+        "totalSessions": 0,
+        "activeSessions": 0
+      }
+    }
+  },
+  "metrics": {},
+  "issues": []
+}

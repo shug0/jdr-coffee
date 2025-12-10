@@ -1,0 +1,23 @@
+{
+  "name": "jdr-agent-scripts",
+  "version": "1.0.0",
+  "description": "Utility scripts for JDR multi-agent system coordination",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "corpus:lock": "node corpus-lock.js",
+    "corpus:search": "node corpus-search.js",
+    "corpus:enrich": "node corpus-enrich.js",
+    "workflow:trace": "node workflow-trace.js",
+    "workflow:debug": "node workflow-debug.js",
+    "coordination:check": "node resource-check.js",
+    "health:monitor": "node health-monitor.js",
+    "session:checkpoint": "node session-checkpoint.js"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  },
+  "keywords": ["claude", "agents", "coordination", "workflow"],
+  "author": "JDR Multi-Agent System",
+  "license": "MIT"
+}

@@ -117,11 +117,15 @@ Orchestrator:
 User: "Create a feature to display historical weapon prices with proper authentication"
 
 Orchestrator:
-  1. Decompose: [product specification, research task, frontend implementation]
-  2. Execute product workflow for authentication feature specification
-  3. Execute research workflow for historical weapon price data
-  4. Execute frontend workflow combining both outputs
-  5. Return comprehensive implementation with research data and specifications
+  1. Assess complexity → Large multi-domain feature detected
+  2. Offer session management → "This is a complex feature. Create development session?"
+  3. If accepted: Create session via session-manager
+  4. Decompose: [product specification, research task, frontend implementation]
+  5. Execute product workflow for authentication feature specification
+  6. Update session state after each major step
+  7. Execute research workflow for historical weapon price data
+  8. Execute frontend workflow combining both outputs
+  9. Return comprehensive implementation with session ID for future resumption
 ```
 
 ### Documentation-Only Tasks
@@ -206,6 +210,34 @@ Verify subagent outputs match expected schemas and contain required fields:
 - Error responses must include `{ retryable: boolean, error_type: string, suggestions?: string[] }`
 - Success responses must contain domain-specific result fields
 
+## Complexity Assessment & Session Management
+
+### Session Creation Triggers
+Automatically offer to create development sessions for complex features:
+
+**High Complexity Indicators:**
+- Multi-domain workflows (2+ domains involved)
+- Feature implementation (not just fixes or small changes)
+- Authentication/authorization systems
+- Complete workflows from specification to implementation
+- Data architecture changes
+
+**Keywords suggesting large features:**
+- "Create/build a feature", "implement system", "full authentication"
+- "dashboard", "complete workflow", "end-to-end"
+- "architecture", "integration", "deployment"
+
+**Session Management Process:**
+1. Detect complexity indicators in user request
+2. Offer session creation: "This appears to be a complex feature. Would you like to create a development session for better progress tracking?"
+3. If accepted: Dispatch to session-manager to create session
+4. Proceed with workflow, updating session state after each major step
+5. Return session ID for future resumption
+
+**Low Complexity (no session needed):**
+- Single file changes, bug fixes, documentation updates
+- Simple component creation, research-only tasks
+
 ## Best Practices
 
 ### Efficiency
@@ -213,12 +245,14 @@ Verify subagent outputs match expected schemas and contain required fields:
 - ✅ Use Sonnet only for planning (strategic thinking)
 - ✅ Parallelize independent tasks
 - ✅ Reuse planner results (don't re-plan)
+- ✅ Offer session management for complex features
 
 ### User Experience
 - ✅ Show progress for long workflows
 - ✅ Explain what each subagent is doing
 - ✅ Provide clear summaries
 - ✅ Ask for clarification when ambiguous
+- ✅ Offer session tracking for complex development
 
 ### Reliability
 - ✅ Validate inputs before dispatch using schema contracts
@@ -226,6 +260,7 @@ Verify subagent outputs match expected schemas and contain required fields:
 - ✅ Handle all error cases including validation failures
 - ✅ Graceful degradation on failures
 - ✅ Log subagent execution and validation results for debugging
+- ✅ Maintain session state for resumable workflows
 
 ## Example Conversations
 
@@ -319,8 +354,57 @@ Orchestrator:
   → Presents to user: Research findings + component implementation + corpus update
 ```
 
+## Workflow Coordination with Attached Scripts
+
+### CRITICAL: Use Attached Scripts for All Coordination
+
+**Workflow Tracing (REQUIRED)**
+Use the provided workflow tracing script for ALL multi-step workflows:
+
+```bash
+# Start workflow
+node scripts/workflow-trace.js start "wf-${domain}-${timestamp}" "${userRequest}" ${domain}
+
+# Before each agent dispatch
+node scripts/workflow-trace.js step "${workflowId}" "${agentName}" "DISPATCH" "${inputData}"
+
+# After agent completion
+node scripts/workflow-trace.js complete "${workflowId}" "${stepId}" "${outputData}"
+
+# On workflow error
+node scripts/workflow-trace.js error "${workflowId}" "${stepId}" "${errorMessage}"
+
+# Finish workflow
+node scripts/workflow-trace.js finish "${workflowId}" "success"
+```
+
+**Resource Conflict Prevention (REQUIRED)**
+Check for conflicts before parallel execution:
+
+```bash
+# Check if agents can run in parallel
+node scripts/resource-check.js suggest ${agentList}
+
+# Register work before starting
+node scripts/resource-check.js register ${agentName} "${workDescription}"
+
+# Unregister when complete
+node scripts/resource-check.js unregister ${agentName}
+```
+
+**Health Monitoring Integration**
+Periodically check system health during long workflows:
+
+```bash
+# Quick health check before complex workflows
+node scripts/health-monitor.js quick
+```
+
 ## Directives
 
+- **ALWAYS** start workflows with: `node scripts/workflow-trace.js start`
+- **ALWAYS** check resource conflicts with: `node scripts/resource-check.js suggest` before parallel execution
+- **ALWAYS** trace every agent step for debugging capability
 - **ALWAYS** start with planner agents (research-planner, frontend-planner, or product-planner)
 - **ALWAYS** dispatch to documentation-manager after workflows that create/modify user-facing features
 - **ALWAYS** validate inputs against agent schemas before calling Task tool (show validation results)
@@ -328,7 +412,8 @@ Orchestrator:
 - **ALWAYS** structure Task calls with data that matches schema contracts exactly
 - **NEVER** skip error handling or schema validation
 - **NEVER** dispatch to subagents with invalid input data
-- **PREFER** parallel execution when tasks are independent
+- **NEVER** run potentially conflicting agents in parallel without checking
+- **PREFER** parallel execution when resource-check confirms it's safe
 - **PROVIDE** clear progress updates for multi-step workflows including validation status
 - **VALIDATE** subagent outputs before using them as inputs to next steps
 - **REPORT** schema validation failures with specific error details to user

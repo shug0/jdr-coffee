@@ -22,6 +22,13 @@ import { FeatureSpecifierOutputSchema } from '../../product/feature-specifier/ag
 import { FeasibilityAssessorOutputSchema } from '../../product/feasibility-assessor/agent.schemas'
 import { AcceptanceDefinerOutputSchema } from '../../product/acceptance-definer/agent.schemas'
 
+// Shared domain
+import { 
+  SessionCreateOutputSchema, 
+  SessionUpdateOutputSchema, 
+  SessionResumeOutputSchema 
+} from '../session-manager/agent.schemas'
+
 // Orchestrator coordination schemas
 export const OrchestrationStepSchema = z.object({
   agent: z.string(),
@@ -68,7 +75,10 @@ export const AGENT_OUTPUT_SCHEMAS = {
   'requirements-analyzer': RequirementsAnalyzerOutputSchema,
   'feature-specifier': FeatureSpecifierOutputSchema,
   'feasibility-assessor': FeasibilityAssessorOutputSchema,
-  'acceptance-definer': AcceptanceDefinerOutputSchema
+  'acceptance-definer': AcceptanceDefinerOutputSchema,
+  
+  // Shared domain
+  'session-manager': SessionCreateOutputSchema // Note: session-manager has multiple output schemas
 } as const
 
 // Type exports

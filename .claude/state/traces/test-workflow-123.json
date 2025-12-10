@@ -1,0 +1,27 @@
+{
+  "workflowId": "test-workflow-123",
+  "description": "Test de validation",
+  "domain": "research",
+  "startTime": 1765408678588,
+  "status": "success",
+  "steps": [
+    {
+      "stepId": 0,
+      "agent": "corpus-searcher",
+      "action": "Test recherche corpus",
+      "timestamp": 1765408682343,
+      "data": "{}",
+      "status": "completed",
+      "duration": 4471,
+      "endTime": 1765408686814,
+      "result": "Test réussi"
+    }
+  ],
+  "metadata": {
+    "user": "tomo",
+    "version": "1.0.0",
+    "orchestrator": "claude-orchestrator"
+  },
+  "endTime": 1765408689556,
+  "totalDuration": 10968
+}

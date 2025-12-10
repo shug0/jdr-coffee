@@ -1,0 +1,28 @@
+2025-12-10T23:17:58.588Z|WORKFLOW_START|test-workflow-123|Test de validation
+2025-12-10T23:18:02.343Z|STEP|test-workflow-123|corpus-searcher|Test recherche corpus
+2025-12-10T23:18:06.814Z|COMPLETE|test-workflow-123|corpus-searcher|4471ms
+2025-12-10T23:18:09.556Z|WORKFLOW_END|test-workflow-123|success|10968ms
+2025-12-10T23:18:30.179Z|WORKFLOW_START|demo-wf-1765408710176|Demo recherche épée médiévale
+2025-12-10T23:18:30.184Z|STEP|demo-wf-1765408710176|research-planner|Planification stratégie recherche
+2025-12-10T23:18:30.306Z|COMPLETE|demo-wf-1765408710176|research-planner|123ms
+2025-12-10T23:18:30.309Z|STEP|demo-wf-1765408710176|corpus-searcher|Recherche dans corpus historique
+2025-12-10T23:18:30.392Z|COMPLETE|demo-wf-1765408710176|corpus-searcher|83ms
+2025-12-10T23:18:30.395Z|STEP|demo-wf-1765408710176|web-researcher|Recherche sources académiques
+2025-12-10T23:18:30.650Z|COMPLETE|demo-wf-1765408710176|web-researcher|254ms
+2025-12-10T23:18:30.652Z|STEP|demo-wf-1765408710176|source-validator|Validation croisée des sources
+2025-12-10T23:18:30.766Z|COMPLETE|demo-wf-1765408710176|source-validator|114ms
+2025-12-10T23:18:30.768Z|STEP|demo-wf-1765408710176|corpus-enricher|Enrichissement corpus
+2025-12-10T23:18:30.835Z|COMPLETE|demo-wf-1765408710176|corpus-enricher|67ms
+2025-12-10T23:18:30.837Z|WORKFLOW_END|demo-wf-1765408710176|success|659ms
+2025-12-10T23:18:52.256Z|WORKFLOW_START|demo-wf-1765408732254|Demo recherche épée médiévale
+2025-12-10T23:18:52.262Z|STEP|demo-wf-1765408732254|research-planner|Planification stratégie recherche
+2025-12-10T23:18:52.386Z|COMPLETE|demo-wf-1765408732254|research-planner|124ms
+2025-12-10T23:18:52.389Z|STEP|demo-wf-1765408732254|corpus-searcher|Recherche dans corpus historique
+2025-12-10T23:18:52.473Z|COMPLETE|demo-wf-1765408732254|corpus-searcher|84ms
+2025-12-10T23:18:52.474Z|STEP|demo-wf-1765408732254|web-researcher|Recherche sources académiques
+2025-12-10T23:18:52.726Z|COMPLETE|demo-wf-1765408732254|web-researcher|253ms
+2025-12-10T23:18:52.727Z|STEP|demo-wf-1765408732254|source-validator|Validation croisée des sources
+2025-12-10T23:18:52.839Z|COMPLETE|demo-wf-1765408732254|source-validator|112ms
+2025-12-10T23:18:52.840Z|STEP|demo-wf-1765408732254|corpus-enricher|Enrichissement corpus
+2025-12-10T23:18:52.904Z|COMPLETE|demo-wf-1765408732254|corpus-enricher|63ms
+2025-12-10T23:18:52.904Z|WORKFLOW_END|demo-wf-1765408732254|success|649ms
