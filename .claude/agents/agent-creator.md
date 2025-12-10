@@ -1,7 +1,7 @@
 ---
 name: agent-creator
 description: Interactive agent designer that guides creation of new specialized agents with validation
-tools: Read, Write, Edit, Glob, Grep
+tools: *
 model: sonnet
 ---
 

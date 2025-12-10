@@ -81,3 +81,51 @@ export const AgentCreatorOutputSchema = z.object({
 export type AgentCreatorInput = z.infer<typeof AgentCreatorInputSchema>
 export type AgentCreatorOutput = z.infer<typeof AgentCreatorOutputSchema>
 export type AgentFileInfo = z.infer<typeof AgentFileInfoSchema>
+
+// Documentation Manager Input/Output schemas
+export const WorkCompletionSummarySchema = z.object({
+  domain: z.enum(['research', 'frontend', 'product']).describe('Domain that completed work'),
+  workType: z.string().describe('Type of work completed (e.g., component_creation, corpus_enrichment)'),
+  summary: z.string().describe('Brief summary of work completed'),
+  filesCreated: z.array(z.string()).optional().describe('List of new files created'),
+  filesModified: z.array(z.string()).optional().describe('List of files modified'),
+  features: z.array(z.string()).optional().describe('New features or capabilities added'),
+  context: z.record(z.string(), z.unknown()).optional().describe('Additional work context')
+})
+
+export const DocumentationUpdateSchema = z.object({
+  file: z.string().describe('Path to documentation file updated'),
+  type: z.enum(['created', 'modified']).describe('Type of update performed'),
+  reason: z.string().describe('Why this documentation was updated'),
+  summary: z.string().describe('Brief description of changes made')
+})
+
+export const DocumentationManagerInputSchema = z.object({
+  task: z.enum(['work_completion', 'audit', 'specific_update']).describe('Type of documentation task'),
+  workCompletion: WorkCompletionSummarySchema.optional().describe('Work completion summary for work_completion task'),
+  specificFiles: z.array(z.string()).optional().describe('Specific files to update for specific_update task'),
+  updateReason: z.string().optional().describe('Reason for specific update'),
+  auditScope: z.enum(['full', 'domain', 'files']).optional().describe('Scope for audit task'),
+  targetDomain: z.enum(['research', 'frontend', 'product']).optional().describe('Target domain for domain audit')
+})
+
+export const DocumentationManagerOutputSchema = z.object({
+  status: z.enum(['success', 'partial', 'error']),
+  updatesPerformed: z.array(z.string()).describe('List of documentation updates performed'),
+  filesModified: z.array(z.string()).describe('List of documentation files modified'),
+  detailedChanges: z.array(DocumentationUpdateSchema).optional().describe('Detailed breakdown of changes'),
+  warnings: z.array(z.string()).optional().describe('Any warnings or issues encountered'),
+  recommendations: z.array(z.string()).optional().describe('Recommendations for future documentation'),
+  auditResults: z.object({
+    totalFiles: z.number(),
+    upToDate: z.number(),
+    needsUpdate: z.number(),
+    missing: z.array(z.string())
+  }).optional().describe('Results from documentation audit'),
+  error: z.string().optional()
+})
+
+export type WorkCompletionSummary = z.infer<typeof WorkCompletionSummarySchema>
+export type DocumentationUpdate = z.infer<typeof DocumentationUpdateSchema>
+export type DocumentationManagerInput = z.infer<typeof DocumentationManagerInputSchema>
+export type DocumentationManagerOutput = z.infer<typeof DocumentationManagerOutputSchema>
