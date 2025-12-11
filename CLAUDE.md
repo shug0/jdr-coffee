@@ -189,6 +189,11 @@ If subagent returns `{retryable: false}`:
 **Start workflow tracing** (Complex workflows only):
 ```bash
 node scripts/workflow-trace.js start "wf-${domain}-${timestamp}" "${userRequest}" ${domain}
+
+# CRITICAL: Log EVERY agent dispatch
+node scripts/workflow-trace.js step "${workflowId}" "${agentName}" "DISPATCH" "${inputData}"
+# After agent completion
+node scripts/workflow-trace.js complete "${workflowId}" "${stepId}" "${outputData}"
 ```
 
 **Check resource conflicts** (Parallel execution only):

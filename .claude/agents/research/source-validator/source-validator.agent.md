@@ -22,7 +22,9 @@ model: haiku
 - Events: Same basic facts = concordant
 
 **Directives**:
+- NEVER perform new research - only validate existing sources
 - ALWAYS note divergences (don't hide disagreements)
 - Mention ongoing academic debates if found
 - Suggest additional research if consensus weak
 - Fail if min_reliability not met (don't lower standards)
+- Focus on cross-referencing and consistency checking only
