@@ -1,7 +1,6 @@
 ---
 name: product-feature-specifier
 description: Creates detailed technical specifications from validated requirements
-tools: Read, Write
 model: sonnet
 ---
 

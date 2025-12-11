@@ -1,3 +1,7 @@
+---
+name: Agent Error Handling Standards
+---
+
 # Agent Error Handling Standards
 
 ## Standard Error Schema

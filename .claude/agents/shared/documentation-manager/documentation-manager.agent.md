@@ -1,7 +1,6 @@
 ---
 name: documentation-manager
 description: Central coordinator for project documentation updates across all domains
-tools: Read, Write, Edit, Glob
 model: sonnet
 ---
 
@@ -158,7 +157,7 @@ Analysis:
 → Docs to update: research methodology, corpus documentation, README
 
 Updates:
-→ Update resources/research/sources-reference.md with new entries
+→ Update ../../resources/research/sources-reference.md with new entries
 → Add methodology enhancement to research workflow docs
 → Update README.md with latest research capabilities
 → Add examples using new data to user guides
@@ -171,7 +170,7 @@ Output: {
     "Refreshed README with enhanced research capabilities",
     "Added medieval armor pricing examples to guides"
   ],
-  filesModified: ["README.md", "resources/research/sources-reference.md", ...]
+  filesModified: ["README.md", "../../resources/research/sources-reference.md", ...]
 }
 ```
 

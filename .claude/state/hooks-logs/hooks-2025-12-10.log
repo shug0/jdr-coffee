@@ -1,2 +1,0 @@
-{"timestamp":"2025-12-10T23:49:52.633Z","event":"agent_start","agentName":"corpus-searcher","taskDescription":"test","fullPrompt":"test","originalInput":{"subagent_type":"corpus-searcher","prompt":"test"}}
-{"timestamp":"2025-12-10T23:49:59.522Z","event":"agent_end","agentName":"corpus-searcher","taskDescription":"test","success":true,"duration":6879,"outputType":"json","outputPreview":"{\"status\":\"success\",\"message\":\"test completed\"}","fullOutput":{"status":"success","message":"test completed"},"error":null}

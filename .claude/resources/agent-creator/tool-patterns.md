@@ -1,3 +1,7 @@
+---
+name: Tool Selection Patterns
+---
+
 # Tool Selection Patterns
 
 ## Common Tool Patterns

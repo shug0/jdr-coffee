@@ -1,7 +1,6 @@
 ---
 name: product-requirements-analyzer
 description: Critical analysis of user requests and requirements validation through iterative dialogue
-tools: Read
 model: sonnet
 ---
 

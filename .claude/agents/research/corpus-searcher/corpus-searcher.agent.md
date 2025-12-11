@@ -1,7 +1,6 @@
 ---
 name: corpus-searcher
 description: Fast readonly search of historical knowledge corpus
-tools: Read
 model: haiku
 ---
 

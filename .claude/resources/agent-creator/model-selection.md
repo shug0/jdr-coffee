@@ -1,3 +1,7 @@
+---
+name: Model Selection Guidelines
+---
+
 # Model Selection Guidelines
 
 ## Choose Sonnet for:

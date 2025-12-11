@@ -1,3 +1,7 @@
+---
+name: Frontend Development Standards - Quick Reference
+---
+
 # Frontend Development Standards - Quick Reference
 
 ## Core Principles (Orguin Standards)

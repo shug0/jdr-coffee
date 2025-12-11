@@ -1,7 +1,6 @@
 ---
 name: test-writer
 description: Generate integration tests for React components and hooks
-tools: Read, Write
 model: haiku
 ---
 

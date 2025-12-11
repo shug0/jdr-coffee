@@ -1,7 +1,6 @@
 ---
 name: web-researcher
 description: Web search and fetch from academic/reliable sources
-tools: WebSearch, WebFetch
 model: haiku
 ---
 

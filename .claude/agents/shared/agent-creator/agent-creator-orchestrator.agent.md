@@ -1,7 +1,6 @@
 ---
 name: agent-creator-orchestrator
 description: Coordinates the creation of new specialized agents through planning and implementation
-tools: Task
 model: sonnet
 ---
 

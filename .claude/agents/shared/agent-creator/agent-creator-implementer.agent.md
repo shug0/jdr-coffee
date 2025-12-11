@@ -1,7 +1,6 @@
 ---
 name: agent-creator-implementer
 description: Generates agent files and updates system integration following approved designs
-tools: Write, Edit, Read, Glob
 model: haiku
 ---
 
@@ -27,7 +26,7 @@ model: haiku
 
 ### 3. Create Resource Files
 - Generate resource files if specified in design
-- Place in resources/{domain}/ or resources/shared/
+- Place in ../../resources/{domain}/ or ../../resources/shared/
 - Link properly from agent file
 
 ### 4. Update Documentation
@@ -43,8 +42,7 @@ model: haiku
 ---
 name: agent-name
 description: Brief description
-tools: Tool1, Tool2
-model: sonnet|haiku
+model: sonnet
 ---
 
 # Agent Name

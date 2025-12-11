@@ -1,3 +1,7 @@
+---
+name: Agent Creation Best Practices
+---
+
 # Agent Creation Best Practices
 
 ## Anthropic Official Guidelines

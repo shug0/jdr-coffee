@@ -1,7 +1,6 @@
 ---
 name: code-writer
 description: Write production-quality React/TypeScript code following established standards
-tools: Read, Write, Edit
 model: haiku
 ---
 

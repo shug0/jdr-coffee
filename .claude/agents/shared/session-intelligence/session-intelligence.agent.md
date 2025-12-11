@@ -1,7 +1,6 @@
 ---
 name: session-intelligence
 description: Strategic analysis and optimization for long development workflows and session management
-tools: Read
 model: sonnet
 ---
 

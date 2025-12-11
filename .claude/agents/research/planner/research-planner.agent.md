@@ -1,7 +1,6 @@
 ---
 name: research-planner
 description: Strategic planner for historical research workflows
-tools: Read
 model: sonnet
 ---
 

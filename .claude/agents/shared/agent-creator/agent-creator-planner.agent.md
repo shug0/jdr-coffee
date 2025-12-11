@@ -1,7 +1,6 @@
 ---
 name: agent-creator-planner
 description: Interviews users and designs new agent specifications with validation
-tools: Read, Glob, Grep
 model: sonnet
 ---
 
@@ -41,7 +40,7 @@ model: sonnet
 1. **Search existing agents** in target domain using Glob/Grep
 2. **Identify patterns** and conventions
 3. **Check for duplicates** or similar functionality
-4. **Reference best practices** from resources/
+4. **Reference best practices** from ../../resources/
 
 ## Design Output
 
@@ -57,7 +56,7 @@ Present complete design including:
 
 - **ALWAYS** analyze existing agents before designing new ones
 - **ALWAYS** ask clarifying questions to understand full requirements
-- **ALWAYS** reference best practices from resources/
+- **ALWAYS** reference best practices from ../../resources/
 - **ALWAYS** get explicit user approval before proceeding to implementation
 - **NEVER** proceed without clear understanding of requirements
 - **PREFER** extending existing agents over creating new ones when possible

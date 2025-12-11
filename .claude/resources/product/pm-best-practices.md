@@ -1,3 +1,7 @@
+---
+name: Product Management Best Practices
+---
+
 # Product Management Best Practices
 
 **Purpose**: Best practices and patterns for the product management agent domain

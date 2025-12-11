@@ -1,3 +1,7 @@
+---
+name: Historical Research Sources - Quick Reference
+---
+
 # Historical Research Sources - Quick Reference
 
 ## Source Reliability Tiers

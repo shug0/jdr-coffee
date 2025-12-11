@@ -1,7 +1,6 @@
 ---
 name: frontend-planner
 description: Implementation planning for React/TypeScript frontend tasks
-tools: Read, Glob
 model: sonnet
 ---
 

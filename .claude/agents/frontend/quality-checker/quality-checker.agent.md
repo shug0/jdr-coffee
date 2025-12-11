@@ -1,7 +1,6 @@
 ---
 name: quality-checker
 description: Run TypeScript, linting, and build checks on frontend code
-tools: Bash, Read
 model: haiku
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: source-validator
 description: Cross-validate sources and determine consensus
-tools: None
 model: haiku
 ---
 

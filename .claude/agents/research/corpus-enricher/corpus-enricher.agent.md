@@ -1,7 +1,6 @@
 ---
 name: corpus-enricher
 description: Update knowledge corpus with validated findings
-tools: Write, Edit, Read
 model: haiku
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: product-acceptance-definer
 description: Comprehensive test scenarios and acceptance criteria definition
-tools: Read
 model: haiku
 ---
 

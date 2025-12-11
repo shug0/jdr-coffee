@@ -9,7 +9,7 @@ Complete transformation to orchestrator-based multi-agent system.
 ├── agents/
 │   ├── shared/                      # Shared utility agents
 │   │   ├── orchestrator/
-│   │   │   └── workflow-orchestrator.agent.md  # Main coordinator (Sonnet)
+│   │   │   └── main-orchestrator.agent.md  # Main coordinator (Sonnet)
 │   │   ├── session-intelligence/
 │   │   │   └── session-intelligence.agent.md   # Session strategy (Sonnet)
 │   │   ├── documentation-manager/
@@ -77,7 +77,7 @@ Complete transformation to orchestrator-based multi-agent system.
 
 - **Before**: 2 monolithic agents (400+ lines each)
 - **After**: 15 focused agents
-  - 1 Workflow Orchestrator (Sonnet)
+  - 1 Main Orchestrator (Sonnet)
   - 5 Research agents (1 Sonnet + 4 Haiku)
   - 4 Frontend agents (1 Sonnet + 3 Haiku)
   - 3 Product agents (2 Sonnet + 1 Haiku)
@@ -115,7 +115,7 @@ Independent tasks (corpus search + web search) run in parallel for better perfor
 ```
 User: "What was the price of a medieval sword?"
 
-Flow: workflow-orchestrator → research-planner → [corpus-searcher || web-researcher] →
+Flow: main-orchestrator → research-planner → [corpus-searcher || web-researcher] →
       source-validator → corpus-enricher → user
 ```
 
@@ -123,7 +123,7 @@ Flow: workflow-orchestrator → research-planner → [corpus-searcher || web-res
 ```
 User: "Create a Button component with variants"
 
-Flow: workflow-orchestrator → frontend-planner → [USER VALIDATION GATE] → 
+Flow: main-orchestrator → frontend-planner → [USER VALIDATION GATE] → 
       code-writer → quality-checker → test-writer → user
 ```
 
@@ -131,7 +131,7 @@ Flow: workflow-orchestrator → frontend-planner → [USER VALIDATION GATE] →
 ```
 User: "I need a user authentication feature"
 
-Flow: workflow-orchestrator → product-requirements-analyzer → product-feature-specifier → 
+Flow: main-orchestrator → product-requirements-analyzer → product-feature-specifier → 
       product-acceptance-definer → user
 ```
 
@@ -143,7 +143,7 @@ The system supports complete feature development from specification to implement
 ```
 User: "Add a dark mode toggle to the app"
 
-Flow: workflow-orchestrator →
+Flow: main-orchestrator →
       [Product: requirements-analyzer → feature-specifier → acceptance-definer] →
       [Frontend: planner → USER VALIDATION → code-writer → quality-checker → test-writer] →
       documentation-manager →
@@ -154,7 +154,7 @@ Flow: workflow-orchestrator →
 ```
 User: "Research medieval weapons and build a UI to display them"
 
-Flow: workflow-orchestrator →
+Flow: main-orchestrator →
       [Research: research-planner → [corpus-searcher || web-researcher] → source-validator → corpus-enricher] →
       [Frontend: frontend-planner → USER VALIDATION → code-writer → quality-checker → test-writer] →
       documentation-manager →
@@ -165,7 +165,7 @@ Flow: workflow-orchestrator →
 ```
 User: "Update all documentation to reflect our new authentication system"
 
-Flow: workflow-orchestrator → documentation-manager → user
+Flow: main-orchestrator → documentation-manager → user
 ```
 
 ## Workflow Monitoring & Logging
@@ -229,7 +229,7 @@ grep "WORKFLOW_ID" .claude/state/workflow.log
 
 ### 🔍 Finding Your Workflow ID
 
-**During execution**: The workflow-orchestrator displays the workflow ID:
+**During execution**: The main-orchestrator displays the workflow ID:
 ```
 🚀 Starting workflow: wf-frontend-1234567890
 ```
@@ -254,7 +254,7 @@ node scripts/health-monitor.js workflows
 ### 🎯 Automatic Logging
 
 - **Agent execution** is automatically logged via hooks
-- **Workflow tracing** depends on orchestrator following directives
+- **Workflow tracing** depends on main orchestrator following directives
 - **Resource coordination** tracks parallel execution
 - **Performance metrics** measure each step duration
 
@@ -270,7 +270,7 @@ npx vitest run
 ### Manual Process
 1. Create agent file with `.agent.md` suffix in appropriate domain directory
 2. Define TypeScript schemas in `agent.schemas.ts` file alongside agent
-3. Add agent to workflow-orchestrator's available subagents list
+3. Add agent to main-orchestrator's available subagents list
 4. Test agent integration with existing workflows
 
 ### Using agent-creator (Recommended)
@@ -281,7 +281,7 @@ Use the `agent-creator` agent to interactively design and implement new agents:
 - Generates all necessary files
 - Updates integration points automatically
 
-Invoke directly or via workflow-orchestrator: "Create a new agent for [purpose]"
+Invoke directly or via main-orchestrator: "Create a new agent for [purpose]"
 
 ### documentation-manager (Recommended for documentation tasks)
 Use the `documentation-manager` agent to maintain project documentation:
@@ -290,13 +290,13 @@ Use the `documentation-manager` agent to maintain project documentation:
 - Tracks documentation freshness and completeness
 - Handles README, API docs, guides, and architecture documentation
 
-Invoke directly for documentation tasks or automatically via workflow-orchestrator after domain workflows.
+Invoke directly for documentation tasks or automatically via main-orchestrator after domain workflows.
 
 ## System Architecture
 
 This system follows the "Scripts Attached to Skills" pattern recommended by Anthropic:
 
-- **Agent coordination** via workflow-orchestrator with mandatory sequences
+- **Agent coordination** via main-orchestrator with mandatory sequences
 - **Resource management** with conflict prevention and locking mechanisms  
 - **Comprehensive logging** for debugging and performance analysis
 - **Session management** for complex multi-domain features
