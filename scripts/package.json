@@ -12,7 +12,11 @@
     "workflow:debug": "node workflow-debug.js",
     "coordination:check": "node resource-check.js",
     "health:monitor": "node health-monitor.js",
-    "session:checkpoint": "node session-checkpoint.js"
+    "session:checkpoint": "node session-checkpoint.js",
+    "session:create": "node session-checkpoint.js create",
+    "session:save": "node session-checkpoint.js save",
+    "session:resume": "node session-checkpoint.js resume",
+    "session:list": "node session-checkpoint.js list"
   },
   "dependencies": {
     "fs": "^0.0.1-security"

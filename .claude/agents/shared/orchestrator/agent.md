@@ -53,6 +53,7 @@ model: sonnet
 ### Shared Utilities
 - `agent-creator` (Sonnet) - Interactive agent designer for creating new specialized agents
 - `documentation-manager` (Sonnet) - Central coordinator for project documentation updates across all domains
+- `session-intelligence` (Sonnet) - Strategic analysis and optimization for long development workflows
 
 ## Orchestration Patterns
 
@@ -227,12 +228,21 @@ Automatically offer to create development sessions for complex features:
 - "dashboard", "complete workflow", "end-to-end"
 - "architecture", "integration", "deployment"
 
-**Session Management Process:**
+**Session Management Process (HYBRID: Agent + Script):**
 1. Detect complexity indicators in user request
 2. Offer session creation: "This appears to be a complex feature. Would you like to create a development session for better progress tracking?"
-3. If accepted: Dispatch to session-manager to create session
-4. Proceed with workflow, updating session state after each major step
+3. If accepted: 
+   - **Create session**: `node scripts/session-checkpoint.js create "${featureTitle}" ${domain}`
+   - **Consult session-intelligence agent**: For checkpoint strategy and timing
+4. Proceed with workflow:
+   - **Save checkpoints**: `node scripts/session-checkpoint.js save ${sessionId} state.json "${description}"` after each major step
+   - **Follow agent's checkpoint plan**: Use script at recommended points
 5. Return session ID for future resumption
+
+**Session Recovery Process:**
+- On workflow interruption: `node scripts/session-checkpoint.js resume ${sessionId}`
+- **Consult session-intelligence agent**: For recovery strategy and next steps
+- Agent interprets recovered state and continues from optimal resumption point
 
 **Low Complexity (no session needed):**
 - Single file changes, bug fixes, documentation updates
@@ -392,6 +402,23 @@ node scripts/resource-check.js register ${agentName} "${workDescription}"
 node scripts/resource-check.js unregister ${agentName}
 ```
 
+**Session Management Integration**
+For complex workflows requiring checkpoints:
+
+```bash
+# Create development session (after user approval)
+node scripts/session-checkpoint.js create "${featureTitle}" ${domain}
+
+# Save checkpoint after major steps
+node scripts/session-checkpoint.js save ${sessionId} state.json "${stepDescription}"
+
+# Resume interrupted workflow
+node scripts/session-checkpoint.js resume ${sessionId}
+
+# List recoverable sessions
+node scripts/session-checkpoint.js list --recoverable
+```
+
 **Health Monitoring Integration**
 Periodically check system health during long workflows:
 
@@ -405,6 +432,8 @@ node scripts/health-monitor.js quick
 - **ALWAYS** start workflows with: `node scripts/workflow-trace.js start`
 - **ALWAYS** check resource conflicts with: `node scripts/resource-check.js suggest` before parallel execution
 - **ALWAYS** trace every agent step for debugging capability
+- **ALWAYS** offer session management for complex workflows (>30min estimated)
+- **ALWAYS** use session checkpoints for multi-domain or multi-step features
 - **ALWAYS** start with planner agents (research-planner, frontend-planner, or product-planner)
 - **ALWAYS** dispatch to documentation-manager after workflows that create/modify user-facing features
 - **ALWAYS** validate inputs against agent schemas before calling Task tool (show validation results)
