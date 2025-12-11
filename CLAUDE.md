@@ -164,9 +164,7 @@ Process:
 - `product-acceptance-definer` (Haiku) - Comprehensive test scenarios and acceptance criteria
 
 ### Shared Utilities
-- `agent-creator-orchestrator` (Sonnet) - Interactive agent designer for creating new specialized agents
 - `documentation-manager` (Sonnet) - Central coordinator for project documentation updates across all domains
-- `session-intelligence` (Sonnet) - Strategic analysis and optimization for long development workflows
 
 ## Error Handling & Recovery
 
