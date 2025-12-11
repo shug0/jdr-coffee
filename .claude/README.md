@@ -7,25 +7,41 @@ Complete transformation to orchestrator-based multi-agent system.
 ```
 .claude/
 ├── agents/
-│   ├── orchestrator.md              # Main coordinator (Sonnet)
+│   ├── shared/                      # Shared utility agents
+│   │   ├── orchestrator/
+│   │   │   └── workflow-orchestrator.agent.md  # Main coordinator (Sonnet)
+│   │   ├── session-intelligence/
+│   │   │   └── session-intelligence.agent.md   # Session strategy (Sonnet)
+│   │   ├── documentation-manager/
+│   │   │   └── documentation-manager.agent.md  # Documentation coordinator (Sonnet)
+│   │   └── agent-creator/          # Agent creation system (3 agents)
 │   ├── research/                    # Historical research domain
-│   │   ├── planner.md              # Strategic planning (Sonnet)
-│   │   ├── corpus-searcher.md      # Knowledge base search (Haiku)
-│   │   ├── web-researcher.md       # Web search/fetch (Haiku)
-│   │   ├── source-validator.md     # Cross-validation (Haiku)
-│   │   └── corpus-enricher.md      # Corpus updates (Haiku)
+│   │   ├── planner/
+│   │   │   └── research-planner.agent.md       # Strategic planning (Sonnet)
+│   │   ├── corpus-searcher/
+│   │   │   └── corpus-searcher.agent.md        # Knowledge base search (Haiku)
+│   │   ├── web-researcher/
+│   │   │   └── web-researcher.agent.md         # Web search/fetch (Haiku)
+│   │   ├── source-validator/
+│   │   │   └── source-validator.agent.md       # Cross-validation (Haiku)
+│   │   └── corpus-enricher/
+│   │       └── corpus-enricher.agent.md        # Corpus updates (Haiku)
 │   ├── frontend/                    # React/TypeScript development
-│   │   ├── planner.md              # Implementation planning (Sonnet)
-│   │   ├── code-writer.md          # Code generation (Haiku)
-│   │   ├── quality-checker.md      # TypeScript/linting/build (Haiku)
-│   │   └── test-writer.md          # Test generation (Haiku)
+│   │   ├── planner/
+│   │   │   └── frontend-planner.agent.md       # Implementation planning (Sonnet)
+│   │   ├── code-writer/
+│   │   │   └── code-writer.agent.md            # Code generation (Haiku)
+│   │   ├── quality-checker/
+│   │   │   └── quality-checker.agent.md        # TypeScript/linting/build (Haiku)
+│   │   └── test-writer/
+│   │       └── test-writer.agent.md            # Test generation (Haiku)
 │   ├── product/                     # Product management domain
-│   │   ├── planner.md              # PM workflow coordination (Sonnet)
-│   │   ├── requirements-analyzer.md # Critical requirements analysis (Sonnet)
-│   │   ├── feature-specifier.md    # Technical specification writing (Haiku)
-│   │   ├── feasibility-assessor.md # Technical feasibility analysis (Haiku)
-│   │   └── acceptance-definer.md   # Test scenarios and acceptance criteria (Haiku)
-│   ├── documentation-manager.md     # Central documentation coordinator (Sonnet)
+│   │   ├── requirements-analyzer/
+│   │   │   └── product-requirements-analyzer.agent.md  # Critical analysis (Sonnet)
+│   │   ├── feature-specifier/
+│   │   │   └── product-feature-specifier.agent.md      # Technical specs (Sonnet)
+│   │   └── acceptance-definer/
+│   │       └── product-acceptance-definer.agent.md     # Test scenarios (Haiku)
 │   └── resources/                   # Shared knowledge
 │       ├── shared/
 │       │   ├── error-handling.md   # Standard error schemas
@@ -60,20 +76,21 @@ Complete transformation to orchestrator-based multi-agent system.
 ## Agent Count
 
 - **Before**: 2 monolithic agents (400+ lines each)
-- **After**: 17 focused agents
-  - 1 Orchestrator (Sonnet)
-  - 5 Research subagents (1 Sonnet + 4 Haiku)
-  - 4 Frontend subagents (1 Sonnet + 3 Haiku)
-  - 5 Product subagents (2 Sonnet + 3 Haiku)
-  - 2 Shared utilities (agent-creator, documentation-manager, both Sonnet)
+- **After**: 15 focused agents
+  - 1 Workflow Orchestrator (Sonnet)
+  - 5 Research agents (1 Sonnet + 4 Haiku)
+  - 4 Frontend agents (1 Sonnet + 3 Haiku)
+  - 3 Product agents (2 Sonnet + 1 Haiku)
+  - 2 Shared utilities (session-intelligence, documentation-manager, both Sonnet)
+  - 3 Agent-creator system agents
 
 ## Key Features
 
-### Schema Validation & Type Safety
-- **Zod schemas** for all agent inputs/outputs with runtime validation
-- **Integrated validation** in orchestrator workflow with schema compliance checking
-- **Validation monitoring** system to track schema adherence across agent executions
-- **Error recovery** with detailed schema violation reporting
+### Workflow Coordination & Validation
+- **Agent schemas** define input/output contracts for each agent (.schemas.ts files)
+- **Mandatory workflow sequences** prevent shortcuts and ensure quality
+- **User validation gates** for technical choice approval in frontend workflows
+- **Comprehensive logging** and monitoring with performance metrics
 
 ### Parallel Execution
 Independent tasks (corpus search + web search) run in parallel for better performance.
@@ -82,11 +99,15 @@ Independent tasks (corpus search + web search) run in parallel for better perfor
 - Sonnet only for strategic planning
 - Haiku for all execution tasks (much cheaper)
 
-### Error Handling
-Standardized error schema with retryable flags and actionable suggestions.
+### Error Handling & Recovery
+- Standardized error patterns with retryable flags
+- Graceful degradation and fallback strategies
+- Clear error reporting with actionable suggestions
 
-### State Persistence
-File-based session state for resuming long workflows.
+### State Persistence & Session Management
+- File-based session state for resuming long workflows
+- Development session checkpoints for complex features
+- Comprehensive workflow tracing and performance monitoring
 
 ## Usage Examples
 
@@ -94,7 +115,7 @@ File-based session state for resuming long workflows.
 ```
 User: "What was the price of a medieval sword?"
 
-Flow: orchestrator → research-planner → [corpus-searcher || web-researcher] →
+Flow: workflow-orchestrator → research-planner → [corpus-searcher || web-researcher] →
       source-validator → corpus-enricher → user
 ```
 
@@ -102,74 +123,29 @@ Flow: orchestrator → research-planner → [corpus-searcher || web-researcher] 
 ```
 User: "Create a Button component with variants"
 
-Flow: orchestrator → frontend-planner → code-writer → quality-checker → user
+Flow: workflow-orchestrator → frontend-planner → [USER VALIDATION GATE] → 
+      code-writer → quality-checker → test-writer → user
 ```
 
 ### Product-Only Task
 ```
 User: "I need a user authentication feature"
 
-Flow: orchestrator → product-planner → requirements-analyzer → feature-specifier → 
-      feasibility-assessor → acceptance-definer → user
+Flow: workflow-orchestrator → product-requirements-analyzer → product-feature-specifier → 
+      product-acceptance-definer → user
 ```
 
-## Validation Integration
+## Multi-Domain Workflows
 
-### Schema Validation System
+### Product + Frontend Integration
+The system supports complete feature development from specification to implementation:
 
-The orchestrator includes comprehensive schema validation for all agent interactions:
-
-**Validation Layers:**
-1. **Input Validation**: All agent inputs validated against Zod schemas before dispatch
-2. **Output Validation**: All agent outputs validated after execution
-3. **Error Recovery**: Schema violations provide actionable error details
-4. **Monitoring**: Validation activity tracked for debugging and quality assurance
-
-**Integration Approach:**
-- Orchestrator includes validation directives in natural language instructions
-- Schema contracts defined for every agent input/output
-- Validation integration guide provides practical implementation patterns
-- Monitoring system tracks validation compliance across all agent executions
-
-### Testing Validation Integration
-
-**Run integration tests:**
-```bash
-npx ts-node .claude/validation-test-runner.ts
-```
-
-**Check validation status:**
-```typescript
-import { getValidationReport, isValidationWorking } from './.claude/validation-monitor'
-
-// Check if validation is active
-const status = isValidationWorking()
-console.log('Validation active:', status.isActive)
-
-// Get comprehensive validation report  
-const report = getValidationReport()
-console.log('Validation stats:', report.summary)
-```
-
-**Verify orchestrator integration:**
-- Orchestrator includes schema validation directives
-- Validation integration guide provides implementation patterns
-- Schema contracts documented for all agents
-- Monitoring system tracks validation compliance
-
-**Key Files:**
-- `.claude/agents/orchestrator.md` - Enhanced with validation directives
-- `.claude/agents/resources/shared/validation-integration-guide.md` - Implementation patterns
-- `.claude/validation-monitor.ts` - Activity monitoring system
-- `.claude/validation-test-runner.ts` - Integration testing tool
-
-### Multi-Domain Task (Product + Frontend)
 ```
 User: "Add a dark mode toggle to the app"
 
-Flow: orchestrator →
-      [Product: planner → requirements-analyzer → feature-specifier → feasibility-assessor → acceptance-definer] →
-      [Frontend: planner → code-writer → quality-checker] →
+Flow: workflow-orchestrator →
+      [Product: requirements-analyzer → feature-specifier → acceptance-definer] →
+      [Frontend: planner → USER VALIDATION → code-writer → quality-checker → test-writer] →
       documentation-manager →
       user
 ```
@@ -178,9 +154,9 @@ Flow: orchestrator →
 ```
 User: "Research medieval weapons and build a UI to display them"
 
-Flow: orchestrator →
-      [Research: planner → searcher → validator → enricher] →
-      [Frontend: planner → code-writer → quality-checker] →
+Flow: workflow-orchestrator →
+      [Research: research-planner → [corpus-searcher || web-researcher] → source-validator → corpus-enricher] →
+      [Frontend: frontend-planner → USER VALIDATION → code-writer → quality-checker → test-writer] →
       documentation-manager →
       user
 ```
@@ -189,8 +165,98 @@ Flow: orchestrator →
 ```
 User: "Update all documentation to reflect our new authentication system"
 
-Flow: orchestrator → documentation-manager → user
+Flow: workflow-orchestrator → documentation-manager → user
 ```
+
+## Workflow Monitoring & Logging
+
+The system includes comprehensive logging and monitoring for all workflow executions.
+
+### 📊 Viewing Workflow Execution Logs
+
+After running any feature workflow, you can analyze the complete execution:
+
+#### **1. Timeline View (Recommended)**
+```bash
+# View detailed timeline of a specific workflow
+node scripts/workflow-trace.js timeline "WORKFLOW_ID"
+```
+
+**Example output:**
+```
+📊 Workflow Timeline: Dark Mode Feature Implementation
+============================================================
+Status: success | Domains: product,frontend
+Duration: 45,230ms
+
+PRODUCT PHASE:
+✅ product-requirements-analyzer - Requirements analysis - 2,100ms
+✅ product-feature-specifier - Feature specification - 3,400ms  
+✅ product-acceptance-definer - Acceptance criteria - 1,200ms
+
+USER VALIDATION GATE:
+⏸️ frontend-planner - Waiting for user approval - (manual)
+
+FRONTEND PHASE:
+✅ code-writer - Component implementation - 8,500ms
+✅ quality-checker - Code quality validation - 2,100ms
+✅ test-writer - Test generation - 1,800ms
+
+DOCUMENTATION:
+✅ documentation-manager - Documentation update - 1,200ms
+```
+
+#### **2. Performance Analysis**
+```bash
+# Detailed performance analysis with bottlenecks
+node scripts/workflow-trace.js analyze "WORKFLOW_ID"
+```
+
+#### **3. List Recent Workflows**
+```bash
+# Show last 10 workflows with IDs
+node scripts/workflow-trace.js list 10
+```
+
+#### **4. Raw Logs**
+```bash
+# View chronological log file
+cat .claude/state/workflow.log
+
+# Filter specific workflow
+grep "WORKFLOW_ID" .claude/state/workflow.log
+```
+
+### 🔍 Finding Your Workflow ID
+
+**During execution**: The workflow-orchestrator displays the workflow ID:
+```
+🚀 Starting workflow: wf-frontend-1234567890
+```
+
+**After execution**: List recent workflows to find the ID you want to analyze.
+
+### 📈 System Health Monitoring
+
+Check overall system health and active workflows:
+
+```bash
+# Quick system status
+node scripts/health-monitor.js quick
+
+# Full system health report  
+node scripts/health-monitor.js check
+
+# Monitor workflows status
+node scripts/health-monitor.js workflows
+```
+
+### 🎯 Automatic Logging
+
+- **Agent execution** is automatically logged via hooks
+- **Workflow tracing** depends on orchestrator following directives
+- **Resource coordination** tracks parallel execution
+- **Performance metrics** measure each step duration
 
 ## Testing
 
@@ -202,10 +268,10 @@ npx vitest run
 ## Adding New Subagents
 
 ### Manual Process
-1. Create agent file in appropriate domain directory
-2. Define Zod schemas in `schemas/{domain}.schemas.ts`
-3. Add tests in `schemas/__tests__/`
-4. Register in orchestrator's available subagents list
+1. Create agent file with `.agent.md` suffix in appropriate domain directory
+2. Define TypeScript schemas in `agent.schemas.ts` file alongside agent
+3. Add agent to workflow-orchestrator's available subagents list
+4. Test agent integration with existing workflows
 
 ### Using agent-creator (Recommended)
 Use the `agent-creator` agent to interactively design and implement new agents:
@@ -215,7 +281,7 @@ Use the `agent-creator` agent to interactively design and implement new agents:
 - Generates all necessary files
 - Updates integration points automatically
 
-Invoke directly or via orchestrator: "Create a new agent for [purpose]"
+Invoke directly or via workflow-orchestrator: "Create a new agent for [purpose]"
 
 ### documentation-manager (Recommended for documentation tasks)
 Use the `documentation-manager` agent to maintain project documentation:
@@ -224,37 +290,43 @@ Use the `documentation-manager` agent to maintain project documentation:
 - Tracks documentation freshness and completeness
 - Handles README, API docs, guides, and architecture documentation
 
-Invoke directly for documentation tasks or automatically via orchestrator after domain workflows.
+Invoke directly for documentation tasks or automatically via workflow-orchestrator after domain workflows.
 
-## Migration Notes
+## System Architecture
 
-Old agents archived in `.claude/agents/_archive/`:
-- `historical-research.md.bak`
-- `frontend-expert.md.bak`
-- `resources/` (old structure)
+This system follows the "Scripts Attached to Skills" pattern recommended by Anthropic:
 
-Can be deleted once confident in new architecture.
+- **Agent coordination** via workflow-orchestrator with mandatory sequences
+- **Resource management** with conflict prevention and locking mechanisms  
+- **Comprehensive logging** for debugging and performance analysis
+- **Session management** for complex multi-domain features
+- **User validation gates** ensuring control over technical decisions
 
-## Success Metrics
+## Performance Metrics
 
-Target performance:
-- Corpus search: <1s
-- Research workflow: <60s
-- Frontend code generation: <30s
-- Product specification workflow: <120s
-- Token usage: ≤150% of old agents
+Based on actual workflow execution data:
 
-Quality metrics:
-- Requirements clarity score: >8/10
-- Specification completeness: >95%
-- Implementation success rate: >90%
+**Research workflows**: ~650ms average
+- research-planner: ~124ms  
+- corpus-searcher: ~84ms
+- web-researcher: ~253ms
+- source-validator: ~112ms
+- corpus-enricher: ~63ms
 
-## Architecture Documentation
+**System health**: Monitored via `scripts/health-monitor.js`
+**Debugging**: Complete workflow traces via `scripts/workflow-trace.js`
 
-See `/Users/tomo/.claude/plans/iridescent-whistling-wreath.md` for complete architecture analysis and implementation plan.
+## Scripts & Infrastructure
+
+Key operational scripts in `/scripts/`:
+- `workflow-trace.js` - Complete workflow execution logging
+- `health-monitor.js` - System health monitoring
+- `resource-check.js` - Agent conflict prevention
+- `corpus-lock.js` - Concurrent access management
+- `session-checkpoint.js` - Long workflow session management
 
 ---
 
-**Version**: 2.0.0
-**Last Updated**: 2025-12-09
-**Architecture**: Orchestrator + Subagents
+**Version**: 2.1.0
+**Last Updated**: 2025-12-11
+**Architecture**: Multi-Agent Orchestrator with Scripts
