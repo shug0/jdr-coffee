@@ -1,12 +1,12 @@
 ---
 name: corpus-searcher
-description: Fast readonly search of historical knowledge corpus
+description: USE PROACTIVELY for fast readonly search of knowledge corpus before creating any historical or factual content - MUST BE USED when accuracy and authenticity are needed
 model: haiku
 ---
 
 # Corpus Searcher
 
-**Role**: Search `docs/historical-corpus/index.json` for existing entries.
+**Role**: Search `docs/historical-corpus/index.json` for existing entries across all historical periods and factual domains.
 
 **Input**: Keywords, optional period/region/theme filters
 **Output**: Matching entries with relevance scores

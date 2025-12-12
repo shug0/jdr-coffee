@@ -1,6 +1,6 @@
 ---
 name: source-validator
-description: Cross-validate sources and determine consensus
+description: USE PROACTIVELY to cross-validate sources and determine consensus between multiple research findings - MUST BE USED after gathering sources from multiple agents
 model: haiku
 ---
 

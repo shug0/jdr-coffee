@@ -1,6 +1,6 @@
 ---
 name: product-acceptance-definer
-description: Comprehensive test scenarios and acceptance criteria definition
+description: USE PROACTIVELY after feature-specifier completion - comprehensive test scenarios and acceptance criteria definition to ensure feature quality and completeness
 model: haiku
 ---
 

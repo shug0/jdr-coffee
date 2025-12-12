@@ -1,6 +1,6 @@
 ---
 name: frontend-planner
-description: Implementation planning for React/TypeScript frontend tasks
+description: MUST BE USED PROACTIVELY for implementation planning of React/TypeScript frontend tasks - USE as first step before any frontend development to ensure proper architecture
 model: sonnet
 ---
 

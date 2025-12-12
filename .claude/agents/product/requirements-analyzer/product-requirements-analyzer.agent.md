@@ -1,6 +1,6 @@
 ---
 name: product-requirements-analyzer
-description: Critical analysis of user requests and requirements validation through iterative dialogue
+description: MUST BE USED PROACTIVELY as first step in product domain - critical analysis of user requests and requirements validation through iterative dialogue until requirements are crystal clear
 model: sonnet
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Generate integration tests for React components and hooks
+description: USE PROACTIVELY to generate integration tests for React components and hooks - SHOULD BE USED when user requests comprehensive testing coverage
 model: haiku
 ---
 

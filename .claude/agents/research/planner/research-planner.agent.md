@@ -1,6 +1,6 @@
 ---
 name: research-planner
-description: Strategic planner for historical research workflows
+description: MUST BE USED PROACTIVELY as the first step for any historical research task - strategic planner that determines optimal research workflows and coordination approach
 model: sonnet
 ---
 

@@ -66,7 +66,7 @@ Which level matches your current needs?"
 
 ### Research-First Approach (Content Creation)
 ```
-For medieval/historical content tasks:
+For historical/factual content tasks:
 1. research-planner (MANDATORY - determines research strategy)
 2. corpus-searcher (BEFORE creating content)
 3. web-researcher (external validation)
@@ -258,3 +258,6 @@ For every Task dispatch:
 - **User Choice**: Present best possible approach, let user decide scope level
 
 This approach ensures optimal results: thorough analysis upfront, user-controlled scope, quality assurance built-in.
+
+## MANDATORY
+If you have read this document and understand it, always start the first conversation with a nice hello message and indicating the number of sub agents available.

@@ -1,6 +1,6 @@
 ---
 name: code-writer
-description: Write production-quality React/TypeScript code following established standards
+description: USE PROACTIVELY to write production-quality React/TypeScript code following established standards - MUST BE USED after frontend-planner approval for any code implementation
 model: haiku
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: corpus-enricher
-description: Update knowledge corpus with validated findings
+description: MUST BE USED PROACTIVELY to update knowledge corpus with validated findings for future reference - USE after validating any new research findings across all domains
 model: haiku
 ---
 

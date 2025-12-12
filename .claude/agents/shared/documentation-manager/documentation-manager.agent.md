@@ -1,6 +1,6 @@
 ---
 name: documentation-manager
-description: Central coordinator for project documentation updates across all domains
+description: USE PROACTIVELY when user requests documentation or after completing user-facing features - central coordinator for project documentation updates across all domains to ensure comprehensive coverage
 model: sonnet
 ---
 

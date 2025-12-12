@@ -1,6 +1,6 @@
 ---
 name: quality-checker
-description: Run TypeScript, linting, and build checks on frontend code
+description: MUST BE USED PROACTIVELY after any code generation to run TypeScript, linting, and build checks - MANDATORY quality gate that cannot be skipped
 model: haiku
 ---
 

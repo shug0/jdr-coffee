@@ -1,6 +1,6 @@
 ---
 name: product-feature-specifier
-description: Creates detailed technical specifications from validated requirements
+description: MUST BE USED PROACTIVELY after requirements-analyzer completion - creates detailed technical specifications from validated requirements for comprehensive feature implementation
 model: sonnet
 ---
 
