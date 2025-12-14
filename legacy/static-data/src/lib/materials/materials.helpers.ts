@@ -1,30 +1,30 @@
-import type { Material } from './materials.types'
-import { MATERIALS } from './materials.constants'
+import { MATERIALS } from "./materials.constants";
+import type { Material } from "./materials.types";
 
 /**
  * Périodes historiques disponibles (mises à jour avec les nouvelles périodes)
  */
 export const HISTORICAL_PERIODS = [
-  'bronze-age',
-  'iron-age',
-  'medieval',
-  'renaissance',
-  'enlightenment',
-  'industrial',
-  'modern',
-  'contemporary',
-  'future-near',
-  'future-far',
-] as const
+  "bronze-age",
+  "iron-age",
+  "medieval",
+  "renaissance",
+  "enlightenment",
+  "industrial",
+  "modern",
+  "contemporary",
+  "future-near",
+  "future-far",
+] as const;
 
-export type HistoricalPeriod = (typeof HISTORICAL_PERIODS)[number]
+export type HistoricalPeriod = (typeof HISTORICAL_PERIODS)[number];
 
 /**
  * Récupère les périodes disponibles pour un matériau
  * Les périodes sont déduites des clés présentes dans priceMultiplier
  */
 export function getAvailablePeriods(material: Material): string[] {
-  return Object.keys(material.priceMultiplier)
+  return Object.keys(material.priceMultiplier);
 }
 
 /**
@@ -32,8 +32,8 @@ export function getAvailablePeriods(material: Material): string[] {
  */
 export function getMaterialsForPeriod(period: string): Material[] {
   return Object.values(MATERIALS).filter((material) =>
-    getAvailablePeriods(material).includes(period)
-  )
+    getAvailablePeriods(material).includes(period),
+  );
 }
 
 /**
@@ -41,10 +41,10 @@ export function getMaterialsForPeriod(period: string): Material[] {
  */
 export function isMaterialAvailableInPeriod(
   materialId: string,
-  period: string
+  period: string,
 ): boolean {
-  const material = Object.values(MATERIALS).find((m) => m.id === materialId)
-  return material ? getAvailablePeriods(material).includes(period) : false
+  const material = Object.values(MATERIALS).find((m) => m.id === materialId);
+  return material ? getAvailablePeriods(material).includes(period) : false;
 }
 
 /**
@@ -54,48 +54,48 @@ export function isMaterialAvailableInPeriod(
 export function getMaterialPrice(
   material: Material,
   period: string,
-  baseCost = 100
+  baseCost = 100,
 ): number {
-  const multiplier = material.priceMultiplier[period]
+  const multiplier = material.priceMultiplier[period];
 
   if (multiplier === undefined) {
-    const availablePeriods = getAvailablePeriods(material).join(', ')
+    const availablePeriods = getAvailablePeriods(material).join(", ");
     throw new Error(
       `${material.name} is not available in period "${period}". ` +
-        `Available periods: ${availablePeriods}`
-    )
+        `Available periods: ${availablePeriods}`,
+    );
   }
 
-  return baseCost * multiplier
+  return baseCost * multiplier;
 }
 
 /**
  * Récupère un matériau par son ID
  */
 export function getMaterialById(id: string): Material | undefined {
-  return Object.values(MATERIALS).find((material) => material.id === id)
+  return Object.values(MATERIALS).find((material) => material.id === id);
 }
 
 /**
  * Filtre les matériaux par catégorie
  */
 export function getMaterialsByCategory(
-  category: Material['category']
+  category: Material["category"],
 ): Material[] {
   return Object.values(MATERIALS).filter(
-    (material) => material.category === category
-  )
+    (material) => material.category === category,
+  );
 }
 
 /**
  * Filtre les matériaux par propriété spéciale
  */
 export function getMaterialsByProperty(
-  property: Material['specialProperties'][number]
+  property: Material["specialProperties"][number],
 ): Material[] {
   return Object.values(MATERIALS).filter((material) =>
-    material.specialProperties.includes(property)
-  )
+    material.specialProperties.includes(property),
+  );
 }
 
 /**
@@ -103,10 +103,10 @@ export function getMaterialsByProperty(
  */
 export function getMaterialsSortedByCost(): Material[] {
   return Object.values(MATERIALS).sort((a, b) => {
-    const costA = a.cost ?? 0
-    const costB = b.cost ?? 0
-    return costA - costB
-  })
+    const costA = a.cost ?? 0;
+    const costB = b.cost ?? 0;
+    return costA - costB;
+  });
 }
 
 /**
@@ -114,10 +114,10 @@ export function getMaterialsSortedByCost(): Material[] {
  */
 export function getMaterialsSortedByRarity(): Material[] {
   return Object.values(MATERIALS).sort((a, b) => {
-    const rarityA = a.rarity ?? 0
-    const rarityB = b.rarity ?? 0
-    return rarityA - rarityB
-  })
+    const rarityA = a.rarity ?? 0;
+    const rarityB = b.rarity ?? 0;
+    return rarityA - rarityB;
+  });
 }
 
 /**
@@ -125,9 +125,9 @@ export function getMaterialsSortedByRarity(): Material[] {
  */
 export function getMaterialsByMinSharpness(minScore: number): Material[] {
   return Object.values(MATERIALS).filter((material) => {
-    const score = material.sharpnessScore?.overall ?? 0
-    return score >= minScore
-  })
+    const score = material.sharpnessScore?.overall ?? 0;
+    return score >= minScore;
+  });
 }
 
 /**
@@ -135,10 +135,10 @@ export function getMaterialsByMinSharpness(minScore: number): Material[] {
  */
 export function getMaterialsByDensityRange(
   minDensity: number,
-  maxDensity: number
+  maxDensity: number,
 ): Material[] {
   return Object.values(MATERIALS).filter(
     (material) =>
-      material.density >= minDensity && material.density <= maxDensity
-  )
+      material.density >= minDensity && material.density <= maxDensity,
+  );
 }

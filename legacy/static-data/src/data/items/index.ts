@@ -6,4 +6,4 @@
  * utilisés directement dans les applications.
  */
 
-export * from './weapons'
+export * from "./weapons";

@@ -1,4 +1,4 @@
-import type { Material, SharpnessScore } from './materials.types'
+import type { Material } from "./materials.types";
 
 /**
  * Calcule le poids final d'un item basé sur son volume et le matériau
@@ -8,11 +8,11 @@ import type { Material, SharpnessScore } from './materials.types'
  */
 export function calculateWeight(
   baseVolume: number,
-  material: Material
+  material: Material,
 ): number {
   // poids (kg) = volume (dm³) × densité (kg/dm³) × weightFactor
   // Note: densité en g/cm³ = densité en kg/dm³
-  return baseVolume * material.density * material.weightFactor
+  return baseVolume * material.density * material.weightFactor;
 }
 
 /**
@@ -23,9 +23,9 @@ export function calculateWeight(
  */
 export function calculateDurability(
   baseDurability: number,
-  material: Material
+  material: Material,
 ): number {
-  return baseDurability * material.durabilityFactor
+  return baseDurability * material.durabilityFactor;
 }
 
 /**
@@ -36,9 +36,9 @@ export function calculateDurability(
  */
 export function calculateEffectiveness(
   baseEffectiveness: number,
-  material: Material
+  material: Material,
 ): number {
-  return baseEffectiveness * material.effectivenessFactor
+  return baseEffectiveness * material.effectivenessFactor;
 }
 
 /**
@@ -53,18 +53,18 @@ export function calculatePrice(
   basePrice: number,
   material: Material,
   period: string,
-  complexityMultiplier = 1
+  complexityMultiplier = 1,
 ): number {
-  const materialCost = material.cost ?? 0
-  const priceMultiplier = material.priceMultiplier[period]
+  const materialCost = material.cost ?? 0;
+  const priceMultiplier = material.priceMultiplier[period];
 
   if (priceMultiplier === undefined) {
     throw new Error(
-      `Material ${material.name} is not available in period ${period}`
-    )
+      `Material ${material.name} is not available in period ${period}`,
+    );
   }
 
-  return basePrice * priceMultiplier + materialCost * complexityMultiplier
+  return basePrice * priceMultiplier + materialCost * complexityMultiplier;
 }
 
 /**
@@ -73,23 +73,23 @@ export function calculatePrice(
  * @returns Dureté normalisée (0-10)
  */
 export function normalizeHardness(material: Material): number {
-  const { hardness } = material
+  const { hardness } = material;
 
   switch (hardness.type) {
-    case 'mohs':
+    case "mohs":
       // Échelle Mohs: 1-10 → 0-10 (linéaire)
-      return hardness.value
+      return hardness.value;
 
-    case 'hrc':
+    case "hrc":
       // Échelle HRC: 0-70 → 0-10
-      return (hardness.value / 70) * 10
+      return (hardness.value / 70) * 10;
 
-    case 'hv':
+    case "hv":
       // Échelle Vickers: 0-1000 → 0-10
-      return (hardness.value / 1000) * 10
+      return (hardness.value / 1000) * 10;
 
     default:
-      return 0
+      return 0;
   }
 }
 
@@ -101,17 +101,19 @@ export function normalizeHardness(material: Material): number {
  */
 export function calculateSharpnessScore(material: Material): number {
   if (!material.sharpnessScore) {
-    return 0
+    return 0;
   }
 
-  const hardnessNorm = normalizeHardness(material)
-  const edgeGeometryScore = material.sharpnessScore.edgeGeometry?.score ?? 0
-  const toughnessScore = material.sharpnessScore.toughness ?? 0
+  const hardnessNorm = normalizeHardness(material);
+  const edgeGeometryScore = material.sharpnessScore.edgeGeometry?.score ?? 0;
+  const toughnessScore = material.sharpnessScore.toughness ?? 0;
 
   const rawScore =
-    hardnessNorm * 0.4 + edgeGeometryScore * 10 * 0.4 + toughnessScore * 10 * 0.2
+    hardnessNorm * 0.4 +
+    edgeGeometryScore * 10 * 0.4 +
+    toughnessScore * 10 * 0.2;
 
-  return Math.min(10, Math.max(0, rawScore))
+  return Math.min(10, Math.max(0, rawScore));
 }
 
 /**
@@ -120,7 +122,7 @@ export function calculateSharpnessScore(material: Material): number {
  * @returns Rapport résistance/poids en MPa/(g/cm³)
  */
 export function calculateStrengthToWeightRatio(material: Material): number {
-  return material.mechanical.tensileStrength / material.density
+  return material.mechanical.tensileStrength / material.density;
 }
 
 /**
@@ -131,19 +133,19 @@ export function calculateStrengthToWeightRatio(material: Material): number {
  */
 export function compareMaterialsForWeapons(
   materialA: Material,
-  materialB: Material
+  materialB: Material,
 ): number {
   const scoreA =
     (materialA.sharpnessScore?.overall ?? 0) * 0.5 +
     normalizeHardness(materialA) * 0.3 +
-    materialA.effectivenessFactor * 10 * 0.2
+    materialA.effectivenessFactor * 10 * 0.2;
 
   const scoreB =
     (materialB.sharpnessScore?.overall ?? 0) * 0.5 +
     normalizeHardness(materialB) * 0.3 +
-    materialB.effectivenessFactor * 10 * 0.2
+    materialB.effectivenessFactor * 10 * 0.2;
 
-  return scoreA - scoreB
+  return scoreA - scoreB;
 }
 
 /**
@@ -154,19 +156,19 @@ export function compareMaterialsForWeapons(
  */
 export function compareMaterialsForArmor(
   materialA: Material,
-  materialB: Material
+  materialB: Material,
 ): number {
   const scoreA =
     normalizeHardness(materialA) * 0.4 +
     materialA.durabilityFactor * 10 * 0.4 +
-    (1 / materialA.weightFactor) * 10 * 0.2
+    (1 / materialA.weightFactor) * 10 * 0.2;
 
   const scoreB =
     normalizeHardness(materialB) * 0.4 +
     materialB.durabilityFactor * 10 * 0.4 +
-    (1 / materialB.weightFactor) * 10 * 0.2
+    (1 / materialB.weightFactor) * 10 * 0.2;
 
-  return scoreA - scoreB
+  return scoreA - scoreB;
 }
 
 /**
@@ -175,19 +177,19 @@ export function compareMaterialsForArmor(
  * @returns Température en °C, ou null si non applicable
  */
 export function getRequiredForgingTemperature(
-  material: Material
+  material: Material,
 ): number | null {
-  if (material.category !== 'metal') {
-    return null
+  if (material.category !== "metal") {
+    return null;
   }
 
-  const meltingPoint = material.thermal?.meltingPoint
+  const meltingPoint = material.thermal?.meltingPoint;
   if (!meltingPoint) {
-    return null
+    return null;
   }
 
   // Température de forge = ~60-70% du point de fusion
-  return Math.round(meltingPoint * 0.65)
+  return Math.round(meltingPoint * 0.65);
 }
 
 /**
@@ -198,9 +200,9 @@ export function getRequiredForgingTemperature(
 export function canBeQuenched(material: Material): boolean {
   // Seuls les métaux avec du carbone (acier) peuvent être trempés
   return (
-    material.category === 'metal' &&
-    (material.id === 'steel' || material.id === 'stainless_steel')
-  )
+    material.category === "metal" &&
+    (material.id === "steel" || material.id === "stainless_steel")
+  );
 }
 
 /**
@@ -209,7 +211,7 @@ export function canBeQuenched(material: Material): boolean {
  * @returns Conductivité normalisée (0 = isolant parfait, 1 = conducteur parfait)
  */
 export function normalizeThermalConductivity(material: Material): number {
-  const conductivity = material.thermal?.thermalConductivity ?? 0
+  const conductivity = material.thermal?.thermalConductivity ?? 0;
   // Graphène a la conductivité la plus élevée (5000 W/m·K)
-  return Math.min(1, conductivity / 5000)
+  return Math.min(1, conductivity / 5000);
 }

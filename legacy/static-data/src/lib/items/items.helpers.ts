@@ -2,11 +2,11 @@
  * Fonctions utilitaires pour manipuler les items
  */
 
-import type { Item, ItemWeight, AbsoluteWeight } from './items.types'
-import type { Universe } from '../universes/universes.types'
-import type { Material } from '../materials/materials.types'
-import type { Rarity } from '../rarities/rarities.types'
-import type { ItemProperty } from '../item-properties/item-properties.types'
+import type { ItemProperty } from "../item-properties/item-properties.types";
+import type { Material } from "../materials/materials.types";
+import type { Rarity } from "../rarities/rarities.types";
+import type { Universe } from "../universes/universes.types";
+import type { AbsoluteWeight, Item, ItemWeight } from "./items.types";
 
 /**
  * Vérifie si un item est disponible dans un univers donné
@@ -23,27 +23,27 @@ import type { ItemProperty } from '../item-properties/item-properties.types'
 export function isItemAvailable(
   item: Item,
   universe: Universe,
-  materials: Record<string, Material>
+  _materials: Record<string, Material>,
 ): boolean {
-  const restrictions = universe.restrictions
+  const restrictions = universe.restrictions;
 
   // Si pas de restrictions, l'item est disponible
   if (!restrictions) {
-    return true
+    return true;
   }
 
   // Vérifier si la catégorie est interdite
   if (restrictions.forbiddenCategories?.includes(item.category)) {
-    return false
+    return false;
   }
 
   // Vérifier si tous les matériaux disponibles sont interdits
   if (restrictions.forbiddenMaterials) {
     const hasAvailableMaterial = item.availableMaterials.some(
-      (matId) => !restrictions.forbiddenMaterials?.includes(matId)
-    )
+      (matId) => !restrictions.forbiddenMaterials?.includes(matId),
+    );
     if (!hasAvailableMaterial) {
-      return false
+      return false;
     }
   }
 
@@ -51,17 +51,17 @@ export function isItemAvailable(
   if (restrictions.forbiddenProperties) {
     for (const prop of item.properties) {
       if (restrictions.forbiddenProperties.includes(prop)) {
-        return false
+        return false;
       }
     }
   }
 
   // Vérifier la disponibilité explicite par univers
   if (item.availability?.universes) {
-    return item.availability.universes.includes(universe.id)
+    return item.availability.universes.includes(universe.id);
   }
 
-  return true
+  return true;
 }
 
 /**
@@ -91,50 +91,50 @@ export function calculateItemPrice(
   rarity: Rarity,
   materials: Record<string, Material>,
   properties: Record<string, ItemProperty>,
-  universe?: Universe
+  universe?: Universe,
 ): number {
-  let price = item.basePrice.value
+  let price = item.basePrice.value;
 
   // Appliquer le multiplicateur de rareté
-  price *= rarity.baseMultiplier
+  price *= rarity.baseMultiplier;
 
   // Appliquer le multiplicateur du matériau pour la période
-  const material = materials[materialId]
+  const material = materials[materialId];
   if (material) {
-    let materialMultiplier = material.priceMultiplier[period]
+    let materialMultiplier = material.priceMultiplier[period];
 
     if (materialMultiplier === undefined) {
       throw new Error(
-        `Material ${material.name} is not available in period ${period}`
-      )
+        `Material ${material.name} is not available in period ${period}`,
+      );
     }
 
     // Appliquer le multiplicateur d'univers si applicable
     const universeMaterialMultiplier =
-      universe?.restrictions?.materialMultipliers?.[material.id]
+      universe?.restrictions?.materialMultipliers?.[material.id];
     if (universeMaterialMultiplier !== undefined) {
-      materialMultiplier *= universeMaterialMultiplier
+      materialMultiplier *= universeMaterialMultiplier;
     }
 
-    price *= materialMultiplier
+    price *= materialMultiplier;
   }
 
   // Appliquer les multiplicateurs de propriétés
   for (const propId of item.properties) {
-    const property = properties[propId]
+    const property = properties[propId];
     if (property?.priceMultiplier) {
-      let propMultiplier = property.priceMultiplier
+      let propMultiplier = property.priceMultiplier;
 
       // Appliquer le multiplicateur d'univers pour la propriété si applicable
       if (universe?.restrictions?.propertyMultipliers?.[propId]) {
-        propMultiplier = universe.restrictions.propertyMultipliers[propId]
+        propMultiplier = universe.restrictions.propertyMultipliers[propId];
       }
 
-      price *= propMultiplier
+      price *= propMultiplier;
     }
   }
 
-  return Math.round(price)
+  return Math.round(price);
 }
 
 /**
@@ -150,15 +150,15 @@ export function calculateItemPrice(
 export function calculateItemWeight(
   item: Item,
   materialId: string,
-  materials: Record<string, Material>
+  materials: Record<string, Material>,
 ): number {
-  const material = materials[materialId]
+  const material = materials[materialId];
   if (!material) {
-    return 0
+    return 0;
   }
 
-  const weight = item.baseVolume * material.density
-  return Math.round(weight * 100) / 100 // Arrondi à 2 décimales
+  const weight = item.baseVolume * material.density;
+  return Math.round(weight * 100) / 100; // Arrondi à 2 décimales
 }
 
 /**
@@ -172,9 +172,9 @@ export function calculateItemWeight(
 export function filterItemsByUniverse(
   items: Item[],
   universe: Universe,
-  materials: Record<string, Material>
+  materials: Record<string, Material>,
 ): Item[] {
-  return items.filter((item) => isItemAvailable(item, universe, materials))
+  return items.filter((item) => isItemAvailable(item, universe, materials));
 }
 
 /**
@@ -188,11 +188,11 @@ export function filterItemsByPeriod(items: Item[], periodId: string): Item[] {
   return items.filter((item) => {
     // Si l'item spécifie des périodes, vérifier si la période demandée est incluse
     if (item.availability?.periods) {
-      return item.availability.periods.includes(periodId)
+      return item.availability.periods.includes(periodId);
     }
     // Sinon, vérifier dans les tags
-    return item.tags.includes(periodId)
-  })
+    return item.tags.includes(periodId);
+  });
 }
 
 /**
@@ -207,33 +207,33 @@ export function filterItemsByPeriod(items: Item[], periodId: string): Item[] {
 export function calculateTotalWeight(items: Item[]): ItemWeight {
   if (items.length === 0) {
     return {
-      absolute: { value: 0, unit: 'kg' },
-    }
+      absolute: { value: 0, unit: "kg" },
+    };
   }
 
   // Détecter le type de système utilisé (absolu ou encombrement)
-  const firstItem = items[0]
+  const firstItem = items[0];
   if (!firstItem) {
     return {
-      absolute: { value: 0, unit: 'kg' },
-    }
+      absolute: { value: 0, unit: "kg" },
+    };
   }
 
-  const usesAbsolute = !!firstItem.weight.absolute
-  const usesEncumbrance = !!firstItem.weight.encumbrance
+  const usesAbsolute = !!firstItem.weight.absolute;
+  const usesEncumbrance = !!firstItem.weight.encumbrance;
 
   if (usesAbsolute) {
     // Calculer le poids absolu total
-    let totalKg = 0
+    let totalKg = 0;
 
     for (const item of items) {
       if (item.weight.absolute) {
-        const weight = item.weight.absolute
+        const weight = item.weight.absolute;
         // Convertir en kg si nécessaire
-        if (weight.unit === 'lb') {
-          totalKg += weight.value * 0.453592 // 1 lb = 0.453592 kg
+        if (weight.unit === "lb") {
+          totalKg += weight.value * 0.453592; // 1 lb = 0.453592 kg
         } else {
-          totalKg += weight.value
+          totalKg += weight.value;
         }
       }
     }
@@ -241,18 +241,18 @@ export function calculateTotalWeight(items: Item[]): ItemWeight {
     return {
       absolute: {
         value: Math.round(totalKg * 100) / 100, // Arrondir à 2 décimales
-        unit: 'kg',
+        unit: "kg",
       },
-    }
+    };
   }
 
   if (usesEncumbrance) {
     // Calculer l'encombrement total en slots
-    let totalSlots = 0
+    let totalSlots = 0;
 
     for (const item of items) {
       if (item.weight.encumbrance?.slots) {
-        totalSlots += item.weight.encumbrance.slots
+        totalSlots += item.weight.encumbrance.slots;
       }
     }
 
@@ -261,13 +261,13 @@ export function calculateTotalWeight(items: Item[]): ItemWeight {
         level: getEncumbranceLevelFromSlots(totalSlots),
         slots: totalSlots,
       },
-    }
+    };
   }
 
   // Par défaut, retourner un poids nul
   return {
-    absolute: { value: 0, unit: 'kg' },
-  }
+    absolute: { value: 0, unit: "kg" },
+  };
 }
 
 /**
@@ -278,12 +278,12 @@ export function calculateTotalWeight(items: Item[]): ItemWeight {
  * @returns Niveau d'encombrement correspondant
  */
 function getEncumbranceLevelFromSlots(slots: number) {
-  if (slots === 0) return 'negligible'
-  if (slots <= 3) return 'light'
-  if (slots <= 6) return 'normal'
-  if (slots <= 10) return 'cumbersome'
-  if (slots <= 15) return 'heavy'
-  return 'very-heavy'
+  if (slots === 0) return "negligible";
+  if (slots <= 3) return "light";
+  if (slots <= 6) return "normal";
+  if (slots <= 10) return "cumbersome";
+  if (slots <= 15) return "heavy";
+  return "very-heavy";
 }
 
 /**
@@ -295,25 +295,25 @@ function getEncumbranceLevelFromSlots(slots: number) {
  */
 export function convertWeight(
   weight: AbsoluteWeight,
-  targetUnit: 'kg' | 'lb'
+  targetUnit: "kg" | "lb",
 ): AbsoluteWeight {
   if (weight.unit === targetUnit) {
-    return weight
+    return weight;
   }
 
-  if (targetUnit === 'kg') {
+  if (targetUnit === "kg") {
     // lb -> kg
     return {
       value: Math.round(weight.value * 0.453592 * 100) / 100,
-      unit: 'kg',
-    }
+      unit: "kg",
+    };
   }
 
   // kg -> lb
   return {
     value: Math.round((weight.value / 0.453592) * 100) / 100,
-    unit: 'lb',
-  }
+    unit: "lb",
+  };
 }
 
 /**
@@ -327,12 +327,12 @@ export function convertWeight(
 export function getAvailableMaterialsForPeriod(
   item: Item,
   periodId: string,
-  materials: Record<string, Material>
+  materials: Record<string, Material>,
 ): string[] {
   return item.availableMaterials.filter((materialId) => {
-    const material = materials[materialId]
-    return material && material.priceMultiplier[periodId] !== undefined
-  })
+    const material = materials[materialId];
+    return material && material.priceMultiplier[periodId] !== undefined;
+  });
 }
 
 /**
@@ -347,14 +347,14 @@ export function getAvailableMaterialsForPeriod(
 export function canItemBeCraftedInPeriod(
   item: Item,
   periodId: string,
-  materials: Record<string, Material>
+  materials: Record<string, Material>,
 ): boolean {
   const availableMaterials = getAvailableMaterialsForPeriod(
     item,
     periodId,
-    materials
-  )
-  return availableMaterials.length > 0
+    materials,
+  );
+  return availableMaterials.length > 0;
 }
 
 /**
@@ -370,14 +370,14 @@ export function isItemMaterialAvailableInPeriod(
   item: Item,
   materialId: string,
   periodId: string,
-  materials: Record<string, Material>
+  materials: Record<string, Material>,
 ): boolean {
   // Vérifier que le matériau est dans la liste des matériaux disponibles de l'item
   if (!item.availableMaterials.includes(materialId)) {
-    return false
+    return false;
   }
 
   // Vérifier que le matériau est disponible dans la période
-  const material = materials[materialId]
-  return material ? material.priceMultiplier[periodId] !== undefined : false
+  const material = materials[materialId];
+  return material ? material.priceMultiplier[periodId] !== undefined : false;
 }

@@ -6,11 +6,11 @@
  * Catégorie de propriété d'item
  */
 export type ItemPropertyCategory =
-  | 'physical'
-  | 'magical'
-  | 'technological'
-  | 'stylistic'
-  | 'functional'
+  | "physical"
+  | "magical"
+  | "technological"
+  | "stylistic"
+  | "functional";
 
 /**
  * Propriété spéciale d'un item
@@ -18,15 +18,15 @@ export type ItemPropertyCategory =
  */
 export interface ItemProperty {
   /** Identifiant unique (ex: 'enchanted', 'heavy', 'ceremonial') */
-  id: string
+  id: string;
   /** Nom de la propriété */
-  name: string
+  name: string;
   /** Catégorie de propriété */
-  category: ItemPropertyCategory
+  category: ItemPropertyCategory;
   /** Effet ou description de la propriété */
-  effect?: string
+  effect?: string;
   /** Multiplicateur de prix (optionnel, 1 = pas de changement) */
-  priceMultiplier?: number
+  priceMultiplier?: number;
   /** Description */
-  description?: string
+  description?: string;
 }

@@ -7,11 +7,11 @@
  */
 export interface Category {
   /** Identifiant unique (ex: 'weapon', 'armor', 'tool') */
-  id: string
+  id: string;
   /** Nom de la catégorie */
-  name: string
+  name: string;
   /** Description */
-  description?: string
+  description?: string;
   /** Sous-catégories possibles */
-  subcategories?: string[]
+  subcategories?: string[];
 }

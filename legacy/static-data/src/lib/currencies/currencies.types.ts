@@ -5,20 +5,20 @@
 /**
  * Type de devise
  */
-export type CurrencyType = 'coin' | 'electronic' | 'corporate' | 'barter'
+export type CurrencyType = "coin" | "electronic" | "corporate" | "barter";
 
 /**
  * Devise utilisée dans un univers de jeu
  */
 export interface Currency {
   /** Identifiant unique de la devise (ex: 'aria-couronne', 'dnd-gold', 'wy-dollar') */
-  id: string
+  id: string;
   /** Nom complet de la devise */
-  name: string
+  name: string;
   /** Symbole de la devise (uniquement si explicitement mentionné) */
-  symbol?: string
+  symbol?: string;
   /** Type de devise (obligatoire) */
-  type: CurrencyType
+  type: CurrencyType;
   /**
    * Valeur de base pour conversion entre devises d'un même système
    * La plus petite unité = 1
@@ -28,7 +28,7 @@ export interface Currency {
    * Optionnel - uniquement pour les systèmes hiérarchiques (coin)
    * Absent pour les systèmes non-hiérarchiques (electronic, corporate, barter)
    */
-  baseValue?: number
+  baseValue?: number;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface Currency {
  */
 export interface FormattedCurrency {
   /** Devise utilisée */
-  currency: Currency
+  currency: Currency;
   /** Quantité de cette devise */
-  amount: number
+  amount: number;
 }

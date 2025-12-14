@@ -7,11 +7,11 @@
  */
 export interface Period {
   /** Identifiant unique (ex: 'ancient', 'medieval', 'modern-1920s') */
-  id: string
+  id: string;
   /** Nom de la période */
-  name: string
+  name: string;
   /** Description */
-  description?: string
+  description?: string;
   /** Intervalle temporel approximatif */
-  timeRange?: string
+  timeRange?: string;
 }

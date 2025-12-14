@@ -7,11 +7,11 @@
  */
 export interface EquipmentSlot {
   /** Identifiant unique (ex: 'head', 'main-hand', 'finger') */
-  id: string
+  id: string;
   /** Nom de l'emplacement */
-  name: string
+  name: string;
   /** Si true, un seul item peut occuper cet emplacement à la fois */
-  exclusive: boolean
+  exclusive: boolean;
   /** Description */
-  description?: string
+  description?: string;
 }

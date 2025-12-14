@@ -7,9 +7,9 @@
  */
 export interface Genre {
   /** Identifiant unique (ex: 'fantasy', 'horror', 'realistic') */
-  id: string
+  id: string;
   /** Nom du genre */
-  name: string
+  name: string;
   /** Description */
-  description?: string
+  description?: string;
 }

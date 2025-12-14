@@ -11,7 +11,7 @@ export default function Home() {
             width={128}
             height={128}
             className="mx-auto"
-            style={{ imageRendering: 'pixelated' }}
+            style={{ imageRendering: "pixelated" }}
             priority
           />
         </div>

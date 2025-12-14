@@ -5,43 +5,43 @@
 /**
  * Catégorie de matériau
  */
-export type MaterialCategory = 'metal' | 'organic' | 'mineral' | 'composite'
+export type MaterialCategory = "metal" | "organic" | "mineral" | "composite";
 
 /**
  * Durabilité d'un matériau (DÉPRÉCIÉ - utiliser hardness + mechanical)
  */
 export type MaterialDurability =
-  | 'very-low'
-  | 'low'
-  | 'medium'
-  | 'high'
-  | 'very-high'
+  | "very-low"
+  | "low"
+  | "medium"
+  | "high"
+  | "very-high";
 
 /**
  * Tranchant d'un matériau pour armes (DÉPRÉCIÉ - utiliser sharpnessScore)
  */
-export type MaterialSharpness = 'blunt' | 'sharp' | 'very-sharp'
+export type MaterialSharpness = "blunt" | "sharp" | "very-sharp";
 
 /**
  * Flexibilité d'un matériau
  */
-export type MaterialFlexibility = 'rigid' | 'flexible' | 'very-flexible'
+export type MaterialFlexibility = "rigid" | "flexible" | "very-flexible";
 
 /**
  * Type de mesure de dureté
  */
-export type HardnessType = 'mohs' | 'hrc' | 'hv'
+export type HardnessType = "mohs" | "hrc" | "hv";
 
 /**
  * Dureté d'un matériau avec échelle scientifique
  */
 export interface MaterialHardness {
   /** Type de mesure (Mohs pour minéraux, HRC pour métaux, HV pour Vickers) */
-  type: HardnessType
+  type: HardnessType;
   /** Valeur de dureté */
-  value: number
+  value: number;
   /** Plage de valeurs (optionnel) */
-  range?: [number, number]
+  range?: [number, number];
 }
 
 /**
@@ -49,9 +49,9 @@ export interface MaterialHardness {
  */
 export interface EdgeGeometry {
   /** Score de géométrie (0-1, plus proche de 1 = meilleur) */
-  score: number
+  score: number;
   /** Rayon du bord en micromètres */
-  radiusMicrometers: number
+  radiusMicrometers: number;
 }
 
 /**
@@ -59,11 +59,11 @@ export interface EdgeGeometry {
  */
 export interface SharpnessScore {
   /** Score global de tranchance (0-10) */
-  overall: number
+  overall: number;
   /** Géométrie du bord (optionnel) */
-  edgeGeometry?: EdgeGeometry
+  edgeGeometry?: EdgeGeometry;
   /** Ténacité / résistance à la casse (0-1, optionnel) */
-  toughness?: number
+  toughness?: number;
 }
 
 /**
@@ -71,9 +71,9 @@ export interface SharpnessScore {
  */
 export interface ThermalProperties {
   /** Conductivité thermique en W/m·K */
-  thermalConductivity: number
+  thermalConductivity: number;
   /** Point de fusion en °C (optionnel) */
-  meltingPoint?: number
+  meltingPoint?: number;
 }
 
 /**
@@ -81,36 +81,36 @@ export interface ThermalProperties {
  */
 export interface MechanicalProperties {
   /** Résistance à la traction en MPa */
-  tensileStrength: number
+  tensileStrength: number;
   /** Plage de résistance (optionnel) */
-  tensileStrengthRange?: [number, number]
+  tensileStrengthRange?: [number, number];
   /** Module d'élasticité en GPa (optionnel) */
-  elasticModulus?: number
+  elasticModulus?: number;
 }
 
 /**
  * Propriétés spéciales d'un matériau
  */
 export type MaterialSpecialProperty =
-  | 'magnetic'
-  | 'corrosion_resistant'
-  | 'biocompatible'
-  | 'fireproof'
-  | 'conductive'
-  | 'insulator'
-  | 'transparent'
-  | 'brittle'
-  | 'flexible'
-  | 'antimicrobial'
-  | 'ultra_sharp'
-  | 'fragile'
-  | 'heavy'
-  | 'light'
-  | 'abundant'
-  | 'rare'
-  | 'precious'
-  | 'experimental'
-  | 'theoretical'
+  | "magnetic"
+  | "corrosion_resistant"
+  | "biocompatible"
+  | "fireproof"
+  | "conductive"
+  | "insulator"
+  | "transparent"
+  | "brittle"
+  | "flexible"
+  | "antimicrobial"
+  | "ultra_sharp"
+  | "fragile"
+  | "heavy"
+  | "light"
+  | "abundant"
+  | "rare"
+  | "precious"
+  | "experimental"
+  | "theoretical";
 
 /**
  * Matériau utilisé pour fabriquer des items
@@ -118,33 +118,33 @@ export type MaterialSpecialProperty =
 export interface Material {
   // IDENTITÉ
   /** Identifiant unique (ex: 'iron', 'wood', 'leather') */
-  id: string
+  id: string;
   /** Nom du matériau */
-  name: string
+  name: string;
   /** Catégorie principale */
-  category: MaterialCategory
+  category: MaterialCategory;
 
   // PROPRIÉTÉS PHYSIQUES SCIENTIFIQUES
   /** Densité en g/cm³ (= kg/dm³) */
-  density: number
+  density: number;
   /** Dureté scientifique (Mohs/HRC/HV) */
-  hardness: MaterialHardness
+  hardness: MaterialHardness;
   /** Propriétés mécaniques (résistance, élasticité) */
-  mechanical: MechanicalProperties
+  mechanical: MechanicalProperties;
   /** Propriétés thermiques (optionnel) */
-  thermal?: ThermalProperties
+  thermal?: ThermalProperties;
 
   // TRANCHANCE
   /** Score de tranchance scientifique 0-10 (optionnel) */
-  sharpnessScore?: SharpnessScore
+  sharpnessScore?: SharpnessScore;
   /** Tranchant simple (DÉPRÉCIÉ, garder pour compatibilité) */
-  sharpness?: MaterialSharpness
+  sharpness?: MaterialSharpness;
 
   // FLEXIBILITÉ & DURABILITÉ
   /** Flexibilité du matériau (optionnel) */
-  flexibility?: MaterialFlexibility
+  flexibility?: MaterialFlexibility;
   /** Durabilité simple (DÉPRÉCIÉ, calculé depuis hardness+strength) */
-  durability: MaterialDurability
+  durability: MaterialDurability;
 
   // FACTEURS DE JEU
   /**
@@ -152,27 +152,27 @@ export interface Material {
    * Les périodes disponibles sont déduites des clés présentes
    * Exemple: { 'medieval': 4.0, 'renaissance': 3.0, 'modern': 0.7 }
    */
-  priceMultiplier: Record<string, number>
+  priceMultiplier: Record<string, number>;
   /** Facteur de poids pour calculs */
-  weightFactor: number
+  weightFactor: number;
   /** Facteur de durabilité pour calculs */
-  durabilityFactor: number
+  durabilityFactor: number;
   /** Facteur d'efficacité pour calculs */
-  effectivenessFactor: number
+  effectivenessFactor: number;
 
   // DISPONIBILITÉ HISTORIQUE
   /** Date/époque de découverte historique (optionnel) */
-  historicalDiscovery?: string
+  historicalDiscovery?: string;
 
   // PROPRIÉTÉS SPÉCIALES
   /** Liste des propriétés spéciales du matériau */
-  specialProperties: MaterialSpecialProperty[]
+  specialProperties: MaterialSpecialProperty[];
 
   // MÉTADONNÉES
   /** Description du matériau */
-  description?: string
+  description?: string;
   /** Coût pour le jeu (1-1000, optionnel) */
-  cost?: number
+  cost?: number;
   /** Rareté pour le jeu (1-10, optionnel) */
-  rarity?: number
+  rarity?: number;
 }

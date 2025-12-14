@@ -1,10 +1,10 @@
-import type { Currency, FormattedCurrency } from './currencies.types'
+import type { Currency, FormattedCurrency } from "./currencies.types";
 
 /**
  * Vérifie si un système de devises est hiérarchique (avec conversions fixes)
  */
 export function isHierarchical(currencies: Record<string, Currency>): boolean {
-  return Object.values(currencies).some((c) => c.baseValue !== undefined)
+  return Object.values(currencies).some((c) => c.baseValue !== undefined);
 }
 
 /**
@@ -16,7 +16,7 @@ export function getCurrencyHierarchy(
 ): Currency[] {
   return Object.values(currencies)
     .filter((c) => c.baseValue !== undefined)
-    .sort((a, b) => (b.baseValue || 0) - (a.baseValue || 0))
+    .sort((a, b) => (b.baseValue || 0) - (a.baseValue || 0));
 }
 
 /**
@@ -32,24 +32,24 @@ export function formatCurrency(
   currencies: Record<string, Currency>,
 ): FormattedCurrency[] {
   if (!isHierarchical(currencies)) {
-    throw new Error('Cannot format non-hierarchical currency system')
+    throw new Error("Cannot format non-hierarchical currency system");
   }
 
-  const hierarchy = getCurrencyHierarchy(currencies)
-  const result: FormattedCurrency[] = []
-  let remaining = value
+  const hierarchy = getCurrencyHierarchy(currencies);
+  const result: FormattedCurrency[] = [];
+  let remaining = value;
 
   for (const currency of hierarchy) {
-    if (!currency.baseValue) continue
+    if (!currency.baseValue) continue;
 
-    const amount = Math.floor(remaining / currency.baseValue)
+    const amount = Math.floor(remaining / currency.baseValue);
     if (amount > 0) {
-      result.push({ currency, amount })
-      remaining -= amount * currency.baseValue
+      result.push({ currency, amount });
+      remaining -= amount * currency.baseValue;
     }
   }
 
-  return result
+  return result;
 }
 
 /**
@@ -61,9 +61,9 @@ export function formatCurrency(
  */
 export function toBaseValue(amount: number, currency: Currency): number {
   if (!currency.baseValue) {
-    throw new Error(`Currency ${currency.id} has no baseValue`)
+    throw new Error(`Currency ${currency.id} has no baseValue`);
   }
-  return amount * currency.baseValue
+  return amount * currency.baseValue;
 }
 
 /**
@@ -75,9 +75,9 @@ export function toBaseValue(amount: number, currency: Currency): number {
  */
 export function fromBaseValue(baseValue: number, currency: Currency): number {
   if (!currency.baseValue) {
-    throw new Error(`Currency ${currency.id} has no baseValue`)
+    throw new Error(`Currency ${currency.id} has no baseValue`);
   }
-  return baseValue / currency.baseValue
+  return baseValue / currency.baseValue;
 }
 
 /**
@@ -92,14 +92,16 @@ export function formatCurrencyText(
   value: number,
   currencies: Record<string, Currency>,
 ): string {
-  const formatted = formatCurrency(value, currencies)
+  const formatted = formatCurrency(value, currencies);
 
   if (formatted.length === 0) {
-    const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1)
-    return `0 ${baseUnit?.name || 'unités'}`
+    const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1);
+    return `0 ${baseUnit?.name || "unités"}`;
   }
 
-  return formatted.map((f) => `${f.amount} ${f.currency.name}${f.amount > 1 ? 's' : ''}`).join(', ')
+  return formatted
+    .map((f) => `${f.amount} ${f.currency.name}${f.amount > 1 ? "s" : ""}`)
+    .join(", ");
 }
 
 /**
@@ -116,17 +118,17 @@ export function formatCurrencySymbols(
   currencies: Record<string, Currency>,
   showZero = false,
 ): string {
-  const formatted = formatCurrency(value, currencies)
+  const formatted = formatCurrency(value, currencies);
 
   if (formatted.length === 0) {
-    const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1)
-    return `0 ${baseUnit?.symbol || baseUnit?.name || 'unités'}`
+    const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1);
+    return `0 ${baseUnit?.symbol || baseUnit?.name || "unités"}`;
   }
 
   return formatted
     .filter((f) => showZero || f.amount > 0)
     .map((f) => `${f.amount} ${f.currency.symbol || f.currency.name}`)
-    .join(', ')
+    .join(", ");
 }
 
 /**
@@ -141,22 +143,22 @@ export function formatCurrencySimple(
   value: number,
   currencies: Record<string, Currency>,
 ): string {
-  const hierarchy = getCurrencyHierarchy(currencies)
+  const hierarchy = getCurrencyHierarchy(currencies);
 
   // Trouver la devise la plus haute qui a du sens
   for (const currency of hierarchy) {
-    if (!currency.baseValue) continue
+    if (!currency.baseValue) continue;
 
-    const amount = value / currency.baseValue
+    const amount = value / currency.baseValue;
 
     // Si >= 1, on utilise cette devise
     if (amount >= 1) {
-      const rounded = Math.ceil(amount * 10) / 10 // Arrondi au dixième supérieur
-      return `${rounded} ${currency.symbol || currency.name}`
+      const rounded = Math.ceil(amount * 10) / 10; // Arrondi au dixième supérieur
+      return `${rounded} ${currency.symbol || currency.name}`;
     }
   }
 
   // Sinon, on utilise l'unité de base
-  const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1)
-  return `${value} ${baseUnit?.symbol || baseUnit?.name || 'unités'}`
+  const baseUnit = Object.values(currencies).find((c) => c.baseValue === 1);
+  return `${value} ${baseUnit?.symbol || baseUnit?.name || "unités"}`;
 }

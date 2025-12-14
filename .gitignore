@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# obsidian
+.obsidian
+
+# claude
+.claude
+
+# scripts and corpus
+scripts
+corpus
+
+# legacy files
+legacy

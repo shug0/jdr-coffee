@@ -6,24 +6,24 @@
  * Niveau de disponibilité d'un item
  */
 export type RarityAvailability =
-  | 'common'
-  | 'uncommon'
-  | 'rare'
-  | 'very-rare'
-  | 'legendary'
+  | "common"
+  | "uncommon"
+  | "rare"
+  | "very-rare"
+  | "legendary";
 
 /**
  * Rareté d'un item (affecte le prix et la disponibilité)
  */
 export interface Rarity {
   /** Identifiant unique (ex: 'mundane', 'quality', 'legendary') */
-  id: string
+  id: string;
   /** Nom de la rareté */
-  name: string
+  name: string;
   /** Multiplicateur de prix de base (1 = prix normal) */
-  baseMultiplier: number
+  baseMultiplier: number;
   /** Niveau de disponibilité dans le monde */
-  availability: RarityAvailability
+  availability: RarityAvailability;
   /** Description */
-  description?: string
+  description?: string;
 }

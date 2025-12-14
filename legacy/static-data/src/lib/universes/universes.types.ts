@@ -8,16 +8,16 @@
  */
 export interface UniverseRestrictions {
   /** Catégories d'items complètement interdites */
-  forbiddenCategories?: string[]
+  forbiddenCategories?: string[];
   /** Propriétés d'items interdites */
-  forbiddenProperties?: string[]
+  forbiddenProperties?: string[];
   /** Matériaux interdits */
-  forbiddenMaterials?: string[]
+  forbiddenMaterials?: string[];
 
   /** Multiplicateurs de prix pour certaines propriétés (si autorisées) */
-  propertyMultipliers?: Record<string, number>
+  propertyMultipliers?: Record<string, number>;
   /** Multiplicateurs de prix pour certains matériaux (si autorisés) */
-  materialMultipliers?: Record<string, number>
+  materialMultipliers?: Record<string, number>;
 }
 
 /**
@@ -25,30 +25,36 @@ export interface UniverseRestrictions {
  */
 export interface Universe {
   /** Identifiant unique (ex: 'aria', 'cthulhu-1920', 'alien') */
-  id: string
+  id: string;
   /** Nom complet de l'univers */
-  name: string
+  name: string;
   /** Créateur/éditeur de l'univers */
-  creator?: string
+  creator?: string;
 
   /** Période temporelle (ex: 'medieval', '1920s', '2180') */
-  period: string
+  period: string;
   /** Équivalent historique si applicable */
-  historicalEquivalent?: string
+  historicalEquivalent?: string;
 
   /** Genres/saveurs de l'univers */
-  genres: string[]
+  genres: string[];
   /** Type principal d'univers */
-  type: 'fantasy' | 'sci-fi' | 'horror' | 'historical' | 'post-apocalyptic' | 'other'
+  type:
+    | "fantasy"
+    | "sci-fi"
+    | "horror"
+    | "historical"
+    | "post-apocalyptic"
+    | "other";
 
   /** Système de jeu utilisé */
-  gameSystem?: string
+  gameSystem?: string;
   /** Description courte */
-  description?: string
+  description?: string;
 
   /** Tags sémantiques pour recherche/filtrage */
-  tags: string[]
+  tags: string[];
 
   /** Restrictions d'items pour cet univers */
-  restrictions?: UniverseRestrictions
+  restrictions?: UniverseRestrictions;
 }
